@@ -33,7 +33,7 @@ class OwnerKostController extends Controller
         $availableRooms = $boardingHouses->sum('available_rooms');
         $roomMatchCount = $boardingHouses->where('is_room_match_enabled', true)->count();
 
-        return view('admin.owner.dashboard', compact(
+        return view('owner.dashboard', compact(
             'boardingHouses',
             'latestKos',
             'totalKos',
@@ -52,7 +52,7 @@ class OwnerKostController extends Controller
             ->latest()
             ->paginate(9);
 
-        return view('admin.owner.kost.index', compact('boardingHouses'));
+        return view('owner.kost.index', compact('boardingHouses'));
     }
 
     /**
@@ -60,7 +60,7 @@ class OwnerKostController extends Controller
      */
     public function create()
     {
-        return view('admin.owner.kost.create');
+        return view('owner.kost.create');
     }
 
     /**
@@ -155,7 +155,7 @@ class OwnerKostController extends Controller
             abort(403, 'Unauthorized action.');
         }
 
-        return view('admin.owner.kost.edit', compact('boardingHouse'));
+        return view('owner.kost.edit', compact('boardingHouse'));
     }
 
     /**

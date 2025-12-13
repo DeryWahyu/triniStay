@@ -2,6 +2,9 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Owner\OwnerKostController;
+use App\Http\Controllers\Renter\RenterDashboardController;
+use App\Http\Controllers\Renter\RoomMatchController;
+use App\Http\Controllers\Renter\SearchController;
 use Illuminate\Support\Facades\Route;
 
 // Landing Page
@@ -52,10 +55,23 @@ Route::middleware('auth')->group(function () {
         Route::delete('/kost/{boardingHouse}', [OwnerKostController::class, 'destroy'])->name('kost.destroy');
     });
 
-    // Renter Dashboard (only renter)
-    Route::middleware('role:renter')->group(function () {
-        Route::get('/dashboard/renter', function () {
-            return view('dashboard.renter');
-        })->name('dashboard.renter');
+    // Renter Routes (only renter)
+    Route::middleware('role:renter')->prefix('dashboard')->name('renter.')->group(function () {
+        // Dashboard / Beranda
+        Route::get('/renter', [RenterDashboardController::class, 'index'])->name('dashboard');
+
+        // Kos Detail
+        Route::get('/kost/{slug}', [RenterDashboardController::class, 'showKos'])->name('kost.show');
+
+        // Cari Kos (Search)
+        Route::get('/cari-kos', [SearchController::class, 'index'])->name('kos.search');
+
+        // Room Match / Cari Teman
+        Route::get('/room-match', [RoomMatchController::class, 'index'])->name('room-match.index');
+        Route::get('/room-match/create', [RoomMatchController::class, 'create'])->name('room-match.create');
+        Route::post('/room-match', [RoomMatchController::class, 'store'])->name('room-match.store');
+        Route::get('/room-match/edit', [RoomMatchController::class, 'edit'])->name('room-match.edit');
+        Route::put('/room-match', [RoomMatchController::class, 'update'])->name('room-match.update');
+        Route::get('/room-match/{id}', [RoomMatchController::class, 'show'])->name('room-match.show');
     });
 });

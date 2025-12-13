@@ -152,7 +152,7 @@ class AuthController extends Controller
 
             return match($user->role) {
                 'superadmin' => redirect()->route('dashboard.admin'),
-                'renter' => redirect()->route('dashboard.renter'),
+                'renter' => redirect()->route('renter.dashboard'),
                 default => redirect()->route('home'),
             };
         }

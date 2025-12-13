@@ -1,4 +1,4 @@
-@extends('layouts.admin.owner')
+@extends('layouts.owner')
 
 @section('title', 'Dashboard')
 @section('page-title', 'Beranda')

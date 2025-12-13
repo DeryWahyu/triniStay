@@ -73,4 +73,33 @@ class User extends Authenticatable
     {
         return $this->role === 'renter';
     }
+
+    /**
+     * Get the roommate preference for this user.
+     */
+    public function roommatePreference()
+    {
+        return $this->hasOne(RoommatePreference::class);
+    }
+
+    /**
+     * Check if user has roommate preference.
+     */
+    public function hasRoommatePreference(): bool
+    {
+        return $this->roommatePreference()->exists();
+    }
+
+    /**
+     * Get user initials for avatar.
+     */
+    public function getInitialsAttribute(): string
+    {
+        $words = explode(' ', $this->name);
+        $initials = '';
+        foreach (array_slice($words, 0, 2) as $word) {
+            $initials .= strtoupper(substr($word, 0, 1));
+        }
+        return $initials;
+    }
 }
