@@ -186,8 +186,8 @@
                                 <p class="text-sm font-medium text-gray-700">{{ Auth::user()->name }}</p>
                                 <p class="text-xs text-gray-500">Owner</p>
                             </div>
-                            <div class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center">
-                                <span class="text-white font-semibold text-sm">{{ strtoupper(substr(Auth::user()->name, 0, 1)) }}</span>
+                            <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-md">
+                                <span class="text-white font-semibold text-sm">{{ Auth::user()->initials }}</span>
                             </div>
                         </div>
 

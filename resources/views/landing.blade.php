@@ -32,7 +32,7 @@
                 @auth
                     <div class="nav-auth">
                         <span class="user-name">{{ Auth::user()->name }}</span>
-                        <a href="{{ match(Auth::user()->role) { 'superadmin' => route('dashboard.admin'), 'owner' => route('owner.dashboard'), 'renter' => route('dashboard.renter') } }}" class="btn-masuk">Dashboard</a>
+                        <a href="{{ match(Auth::user()->role) { 'superadmin' => route('dashboard.admin'), 'owner' => route('owner.dashboard'), 'renter' => route('renter.dashboard') } }}" class="btn-masuk">Dashboard</a>
                     </div>
                 @else
                     <a href="{{ route('login') }}" class="btn-masuk">Masuk</a>

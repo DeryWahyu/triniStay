@@ -56,23 +56,21 @@
                 <div class="flex items-center space-x-4">
                     <div class="relative" x-data="{ open: false }">
                         <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
-                            <div class="w-10 h-10 bg-navy rounded-full flex items-center justify-center">
-                                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                                </svg>
+                            <div class="w-10 h-10 bg-gradient-to-br from-[#19608E] to-[#162D40] rounded-full flex items-center justify-center shadow-md">
+                                <span class="text-white font-semibold text-sm">{{ Auth::user()->initials }}</span>
                             </div>
                             <span class="hidden sm:block text-navy font-medium">{{ Auth::user()->name }}</span>
                         </button>
 
                         <!-- Dropdown Menu -->
                         <div x-show="open" @click.away="open = false" x-cloak
-                             class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 z-50">
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Profil Saya</a>
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Pemesanan</a>
+                             class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg py-2 z-50 border border-gray-100">
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-50">Profil Saya</a>
+                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-50">Pemesanan</a>
                             <hr class="my-2">
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
-                                <button type="submit" class="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-100">
+                                <button type="submit" class="w-full text-left px-4 py-2 text-red-600 hover:bg-red-50">
                                     Keluar
                                 </button>
                             </form>

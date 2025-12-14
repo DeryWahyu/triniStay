@@ -28,7 +28,7 @@ class RoleMiddleware
             return match($user->role) {
                 'superadmin' => redirect()->route('dashboard.admin'),
                 'owner' => redirect()->route('owner.dashboard'),
-                'renter' => redirect()->route('dashboard.renter'),
+                'renter' => redirect()->route('renter.dashboard'),
                 default => redirect()->route('home'),
             };
         }

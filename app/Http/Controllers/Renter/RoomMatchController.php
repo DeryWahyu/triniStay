@@ -80,30 +80,30 @@ class RoomMatchController extends Controller
     {
         $validated = $request->validate([
             // Sleep habits
-            'sleep_lamp_off' => 'required|boolean',
-            'sleep_late' => 'required|boolean',
-            'sleep_noise_tolerant' => 'required|boolean',
-            'sleep_snore' => 'required|boolean',
+            'sleep_lamp_off' => 'required|in:0,1,2',
+            'sleep_late' => 'required|in:0,1,2',
+            'sleep_noise_tolerant' => 'required|in:0,1,2',
+            'sleep_snore' => 'required|in:0,1,2',
             // Cleanliness
-            'clean_daily' => 'required|boolean',
-            'clean_tolerance' => 'required|boolean',
-            'clean_self_wash' => 'required|boolean',
-            'clean_shared_duty' => 'required|boolean',
+            'clean_daily' => 'required|in:0,1,2',
+            'clean_tolerance' => 'required|in:0,1,2',
+            'clean_self_wash' => 'required|in:0,1,2',
+            'clean_shared_duty' => 'required|in:0,1,2',
             // Study/Work
-            'study_late' => 'required|boolean',
-            'study_quiet_needed' => 'required|boolean',
-            'study_music' => 'required|boolean',
+            'study_late' => 'required|in:0,1,2',
+            'study_quiet_needed' => 'required|in:0,1,2',
+            'study_music' => 'required|in:0,1,2',
             // Social
-            'guest_welcome' => 'required|boolean',
-            'introvert' => 'required|boolean',
-            'smoking' => 'required|boolean',
-            'pet_friendly' => 'required|boolean',
+            'guest_welcome' => 'required|in:0,1,2',
+            'introvert' => 'required|in:0,1,2',
+            'smoking' => 'required|in:0,1,2',
+            'pet_friendly' => 'required|in:0,1,2',
             // Bio
             'description' => 'nullable|string|max:500',
             'contact_preference' => 'required|in:whatsapp,email,phone',
         ], [
             'required' => 'Pilihan ini wajib diisi.',
-            'boolean' => 'Pilihan tidak valid.',
+            'in' => 'Pilihan tidak valid.',
             'description.max' => 'Deskripsi maksimal 500 karakter.',
         ]);
 
@@ -136,24 +136,24 @@ class RoomMatchController extends Controller
 
         $validated = $request->validate([
             // Sleep habits
-            'sleep_lamp_off' => 'required|boolean',
-            'sleep_late' => 'required|boolean',
-            'sleep_noise_tolerant' => 'required|boolean',
-            'sleep_snore' => 'required|boolean',
+            'sleep_lamp_off' => 'required|in:0,1,2',
+            'sleep_late' => 'required|in:0,1,2',
+            'sleep_noise_tolerant' => 'required|in:0,1,2',
+            'sleep_snore' => 'required|in:0,1,2',
             // Cleanliness
-            'clean_daily' => 'required|boolean',
-            'clean_tolerance' => 'required|boolean',
-            'clean_self_wash' => 'required|boolean',
-            'clean_shared_duty' => 'required|boolean',
+            'clean_daily' => 'required|in:0,1,2',
+            'clean_tolerance' => 'required|in:0,1,2',
+            'clean_self_wash' => 'required|in:0,1,2',
+            'clean_shared_duty' => 'required|in:0,1,2',
             // Study/Work
-            'study_late' => 'required|boolean',
-            'study_quiet_needed' => 'required|boolean',
-            'study_music' => 'required|boolean',
+            'study_late' => 'required|in:0,1,2',
+            'study_quiet_needed' => 'required|in:0,1,2',
+            'study_music' => 'required|in:0,1,2',
             // Social
-            'guest_welcome' => 'required|boolean',
-            'introvert' => 'required|boolean',
-            'smoking' => 'required|boolean',
-            'pet_friendly' => 'required|boolean',
+            'guest_welcome' => 'required|in:0,1,2',
+            'introvert' => 'required|in:0,1,2',
+            'smoking' => 'required|in:0,1,2',
+            'pet_friendly' => 'required|in:0,1,2',
             // Bio
             'description' => 'nullable|string|max:500',
             'contact_preference' => 'required|in:whatsapp,email,phone',

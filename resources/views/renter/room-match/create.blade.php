@@ -53,7 +53,7 @@
                 <div class="flex items-center space-x-4">
                     <div class="relative" x-data="{ open: false }">
                         <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
-                            <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-md">
+                            <div class="w-10 h-10 bg-gradient-to-br from-[#19608E] to-[#162D40] rounded-full flex items-center justify-center shadow-md">
                                 <span class="text-white font-semibold text-sm">{{ Auth::user()->initials }}</span>
                             </div>
                             <span class="hidden sm:block text-navy font-medium">{{ Auth::user()->name }}</span>
@@ -84,7 +84,7 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                     </svg>
                 </div>
-                <h1 class="text-3xl font-bold text-white mb-2">Temukan Teman Sekamar 🏠</h1>
+                <h1 class="text-3xl font-bold text-white mb-2">Temukan Teman Sekamar</h1>
                 <p class="text-blue-100">Isi preferensi Anda untuk menemukan teman sekamar yang cocok</p>
             </div>
         </div>
@@ -119,14 +119,18 @@
                             <p class="font-medium text-gray-900">Apakah Anda suka tidur dengan lampu mati?</p>
                             <p class="text-sm text-gray-500">Preferensi pencahayaan saat tidur</p>
                         </div>
-                        <div class="flex gap-3">
-                            <label class="flex items-center">
-                                <input type="radio" name="sleep_lamp_off" value="1" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" required>
+                        <div class="flex flex-wrap gap-3">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-green-500 hover:bg-green-50 transition-colors has-[:checked]:border-green-500 has-[:checked]:bg-green-50">
+                                <input type="radio" name="sleep_lamp_off" value="1" class="w-4 h-4 text-green-600 border-gray-300 focus:ring-green-500" required>
                                 <span class="ml-2 text-gray-700">Ya</span>
                             </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="sleep_lamp_off" value="0" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-red-500 hover:bg-red-50 transition-colors has-[:checked]:border-red-500 has-[:checked]:bg-red-50">
+                                <input type="radio" name="sleep_lamp_off" value="0" class="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500">
                                 <span class="ml-2 text-gray-700">Tidak</span>
+                            </label>
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-amber-500 hover:bg-amber-50 transition-colors has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
+                                <input type="radio" name="sleep_lamp_off" value="2" class="w-4 h-4 text-amber-600 border-gray-300 focus:ring-amber-500">
+                                <span class="ml-2 text-gray-700">Kadang</span>
                             </label>
                         </div>
                     </div>
@@ -137,14 +141,18 @@
                             <p class="font-medium text-gray-900">Apakah Anda sering tidur larut malam?</p>
                             <p class="text-sm text-gray-500">Biasanya tidur setelah jam 12 malam</p>
                         </div>
-                        <div class="flex gap-3">
-                            <label class="flex items-center">
-                                <input type="radio" name="sleep_late" value="1" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" required>
+                        <div class="flex flex-wrap gap-3">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-green-500 hover:bg-green-50 transition-colors has-[:checked]:border-green-500 has-[:checked]:bg-green-50">
+                                <input type="radio" name="sleep_late" value="1" class="w-4 h-4 text-green-600 border-gray-300 focus:ring-green-500" required>
                                 <span class="ml-2 text-gray-700">Ya</span>
                             </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="sleep_late" value="0" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-red-500 hover:bg-red-50 transition-colors has-[:checked]:border-red-500 has-[:checked]:bg-red-50">
+                                <input type="radio" name="sleep_late" value="0" class="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500">
                                 <span class="ml-2 text-gray-700">Tidak</span>
+                            </label>
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-amber-500 hover:bg-amber-50 transition-colors has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
+                                <input type="radio" name="sleep_late" value="2" class="w-4 h-4 text-amber-600 border-gray-300 focus:ring-amber-500">
+                                <span class="ml-2 text-gray-700">Kadang</span>
                             </label>
                         </div>
                     </div>
@@ -155,14 +163,18 @@
                             <p class="font-medium text-gray-900">Apakah Anda toleran terhadap suara saat tidur?</p>
                             <p class="text-sm text-gray-500">Tidak mudah terganggu oleh suara</p>
                         </div>
-                        <div class="flex gap-3">
-                            <label class="flex items-center">
-                                <input type="radio" name="sleep_noise_tolerant" value="1" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" required>
+                        <div class="flex flex-wrap gap-3">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-green-500 hover:bg-green-50 transition-colors has-[:checked]:border-green-500 has-[:checked]:bg-green-50">
+                                <input type="radio" name="sleep_noise_tolerant" value="1" class="w-4 h-4 text-green-600 border-gray-300 focus:ring-green-500" required>
                                 <span class="ml-2 text-gray-700">Ya</span>
                             </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="sleep_noise_tolerant" value="0" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-red-500 hover:bg-red-50 transition-colors has-[:checked]:border-red-500 has-[:checked]:bg-red-50">
+                                <input type="radio" name="sleep_noise_tolerant" value="0" class="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500">
                                 <span class="ml-2 text-gray-700">Tidak</span>
+                            </label>
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-amber-500 hover:bg-amber-50 transition-colors has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
+                                <input type="radio" name="sleep_noise_tolerant" value="2" class="w-4 h-4 text-amber-600 border-gray-300 focus:ring-amber-500">
+                                <span class="ml-2 text-gray-700">Kadang</span>
                             </label>
                         </div>
                     </div>
@@ -173,14 +185,18 @@
                             <p class="font-medium text-gray-900">Apakah Anda mendengkur saat tidur?</p>
                             <p class="text-sm text-gray-500">Informasi ini membantu menemukan teman yang cocok</p>
                         </div>
-                        <div class="flex gap-3">
-                            <label class="flex items-center">
-                                <input type="radio" name="sleep_snore" value="1" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" required>
+                        <div class="flex flex-wrap gap-3">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-green-500 hover:bg-green-50 transition-colors has-[:checked]:border-green-500 has-[:checked]:bg-green-50">
+                                <input type="radio" name="sleep_snore" value="1" class="w-4 h-4 text-green-600 border-gray-300 focus:ring-green-500" required>
                                 <span class="ml-2 text-gray-700">Ya</span>
                             </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="sleep_snore" value="0" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-red-500 hover:bg-red-50 transition-colors has-[:checked]:border-red-500 has-[:checked]:bg-red-50">
+                                <input type="radio" name="sleep_snore" value="0" class="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500">
                                 <span class="ml-2 text-gray-700">Tidak</span>
+                            </label>
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-amber-500 hover:bg-amber-50 transition-colors has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
+                                <input type="radio" name="sleep_snore" value="2" class="w-4 h-4 text-amber-600 border-gray-300 focus:ring-amber-500">
+                                <span class="ml-2 text-gray-700">Kadang</span>
                             </label>
                         </div>
                     </div>
@@ -204,14 +220,18 @@
                             <p class="font-medium text-gray-900">Apakah Anda merapikan barang setiap hari?</p>
                             <p class="text-sm text-gray-500">Kebiasaan menjaga kerapian kamar</p>
                         </div>
-                        <div class="flex gap-3">
-                            <label class="flex items-center">
-                                <input type="radio" name="clean_daily" value="1" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" required>
+                        <div class="flex flex-wrap gap-3">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-green-500 hover:bg-green-50 transition-colors has-[:checked]:border-green-500 has-[:checked]:bg-green-50">
+                                <input type="radio" name="clean_daily" value="1" class="w-4 h-4 text-green-600 border-gray-300 focus:ring-green-500" required>
                                 <span class="ml-2 text-gray-700">Ya</span>
                             </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="clean_daily" value="0" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-red-500 hover:bg-red-50 transition-colors has-[:checked]:border-red-500 has-[:checked]:bg-red-50">
+                                <input type="radio" name="clean_daily" value="0" class="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500">
                                 <span class="ml-2 text-gray-700">Tidak</span>
+                            </label>
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-amber-500 hover:bg-amber-50 transition-colors has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
+                                <input type="radio" name="clean_daily" value="2" class="w-4 h-4 text-amber-600 border-gray-300 focus:ring-amber-500">
+                                <span class="ml-2 text-gray-700">Kadang</span>
                             </label>
                         </div>
                     </div>
@@ -222,14 +242,18 @@
                             <p class="font-medium text-gray-900">Apakah Anda toleran dengan keadaan berantakan?</p>
                             <p class="text-sm text-gray-500">Tidak masalah jika kamar sedikit berantakan</p>
                         </div>
-                        <div class="flex gap-3">
-                            <label class="flex items-center">
-                                <input type="radio" name="clean_tolerance" value="1" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" required>
+                        <div class="flex flex-wrap gap-3">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-green-500 hover:bg-green-50 transition-colors has-[:checked]:border-green-500 has-[:checked]:bg-green-50">
+                                <input type="radio" name="clean_tolerance" value="1" class="w-4 h-4 text-green-600 border-gray-300 focus:ring-green-500" required>
                                 <span class="ml-2 text-gray-700">Ya</span>
                             </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="clean_tolerance" value="0" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-red-500 hover:bg-red-50 transition-colors has-[:checked]:border-red-500 has-[:checked]:bg-red-50">
+                                <input type="radio" name="clean_tolerance" value="0" class="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500">
                                 <span class="ml-2 text-gray-700">Tidak</span>
+                            </label>
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-amber-500 hover:bg-amber-50 transition-colors has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
+                                <input type="radio" name="clean_tolerance" value="2" class="w-4 h-4 text-amber-600 border-gray-300 focus:ring-amber-500">
+                                <span class="ml-2 text-gray-700">Kadang</span>
                             </label>
                         </div>
                     </div>
@@ -240,14 +264,18 @@
                             <p class="font-medium text-gray-900">Apakah Anda mencuci alat makan sendiri?</p>
                             <p class="text-sm text-gray-500">Langsung mencuci setelah makan</p>
                         </div>
-                        <div class="flex gap-3">
-                            <label class="flex items-center">
-                                <input type="radio" name="clean_self_wash" value="1" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" required>
+                        <div class="flex flex-wrap gap-3">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-green-500 hover:bg-green-50 transition-colors has-[:checked]:border-green-500 has-[:checked]:bg-green-50">
+                                <input type="radio" name="clean_self_wash" value="1" class="w-4 h-4 text-green-600 border-gray-300 focus:ring-green-500" required>
                                 <span class="ml-2 text-gray-700">Ya</span>
                             </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="clean_self_wash" value="0" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-red-500 hover:bg-red-50 transition-colors has-[:checked]:border-red-500 has-[:checked]:bg-red-50">
+                                <input type="radio" name="clean_self_wash" value="0" class="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500">
                                 <span class="ml-2 text-gray-700">Tidak</span>
+                            </label>
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-amber-500 hover:bg-amber-50 transition-colors has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
+                                <input type="radio" name="clean_self_wash" value="2" class="w-4 h-4 text-amber-600 border-gray-300 focus:ring-amber-500">
+                                <span class="ml-2 text-gray-700">Kadang</span>
                             </label>
                         </div>
                     </div>
@@ -258,14 +286,18 @@
                             <p class="font-medium text-gray-900">Bersedia berbagi tugas kebersihan?</p>
                             <p class="text-sm text-gray-500">Membagi jadwal bersih-bersih dengan teman sekamar</p>
                         </div>
-                        <div class="flex gap-3">
-                            <label class="flex items-center">
-                                <input type="radio" name="clean_shared_duty" value="1" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" required>
+                        <div class="flex flex-wrap gap-3">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-green-500 hover:bg-green-50 transition-colors has-[:checked]:border-green-500 has-[:checked]:bg-green-50">
+                                <input type="radio" name="clean_shared_duty" value="1" class="w-4 h-4 text-green-600 border-gray-300 focus:ring-green-500" required>
                                 <span class="ml-2 text-gray-700">Ya</span>
                             </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="clean_shared_duty" value="0" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-red-500 hover:bg-red-50 transition-colors has-[:checked]:border-red-500 has-[:checked]:bg-red-50">
+                                <input type="radio" name="clean_shared_duty" value="0" class="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500">
                                 <span class="ml-2 text-gray-700">Tidak</span>
+                            </label>
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-amber-500 hover:bg-amber-50 transition-colors has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
+                                <input type="radio" name="clean_shared_duty" value="2" class="w-4 h-4 text-amber-600 border-gray-300 focus:ring-amber-500">
+                                <span class="ml-2 text-gray-700">Kadang</span>
                             </label>
                         </div>
                     </div>
@@ -289,14 +321,18 @@
                             <p class="font-medium text-gray-900">Apakah Anda sering belajar/kerja larut malam?</p>
                             <p class="text-sm text-gray-500">Aktivitas setelah jam 10 malam</p>
                         </div>
-                        <div class="flex gap-3">
-                            <label class="flex items-center">
-                                <input type="radio" name="study_late" value="1" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" required>
+                        <div class="flex flex-wrap gap-3">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-green-500 hover:bg-green-50 transition-colors has-[:checked]:border-green-500 has-[:checked]:bg-green-50">
+                                <input type="radio" name="study_late" value="1" class="w-4 h-4 text-green-600 border-gray-300 focus:ring-green-500" required>
                                 <span class="ml-2 text-gray-700">Ya</span>
                             </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="study_late" value="0" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-red-500 hover:bg-red-50 transition-colors has-[:checked]:border-red-500 has-[:checked]:bg-red-50">
+                                <input type="radio" name="study_late" value="0" class="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500">
                                 <span class="ml-2 text-gray-700">Tidak</span>
+                            </label>
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-amber-500 hover:bg-amber-50 transition-colors has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
+                                <input type="radio" name="study_late" value="2" class="w-4 h-4 text-amber-600 border-gray-300 focus:ring-amber-500">
+                                <span class="ml-2 text-gray-700">Kadang</span>
                             </label>
                         </div>
                     </div>
@@ -307,14 +343,18 @@
                             <p class="font-medium text-gray-900">Apakah Anda membutuhkan suasana hening saat belajar?</p>
                             <p class="text-sm text-gray-500">Preferensi lingkungan belajar</p>
                         </div>
-                        <div class="flex gap-3">
-                            <label class="flex items-center">
-                                <input type="radio" name="study_quiet_needed" value="1" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" required>
+                        <div class="flex flex-wrap gap-3">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-green-500 hover:bg-green-50 transition-colors has-[:checked]:border-green-500 has-[:checked]:bg-green-50">
+                                <input type="radio" name="study_quiet_needed" value="1" class="w-4 h-4 text-green-600 border-gray-300 focus:ring-green-500" required>
                                 <span class="ml-2 text-gray-700">Ya</span>
                             </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="study_quiet_needed" value="0" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-red-500 hover:bg-red-50 transition-colors has-[:checked]:border-red-500 has-[:checked]:bg-red-50">
+                                <input type="radio" name="study_quiet_needed" value="0" class="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500">
                                 <span class="ml-2 text-gray-700">Tidak</span>
+                            </label>
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-amber-500 hover:bg-amber-50 transition-colors has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
+                                <input type="radio" name="study_quiet_needed" value="2" class="w-4 h-4 text-amber-600 border-gray-300 focus:ring-amber-500">
+                                <span class="ml-2 text-gray-700">Kadang</span>
                             </label>
                         </div>
                     </div>
@@ -325,14 +365,18 @@
                             <p class="font-medium text-gray-900">Apakah Anda suka mendengarkan musik saat belajar?</p>
                             <p class="text-sm text-gray-500">Menggunakan speaker atau headphone</p>
                         </div>
-                        <div class="flex gap-3">
-                            <label class="flex items-center">
-                                <input type="radio" name="study_music" value="1" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" required>
+                        <div class="flex flex-wrap gap-3">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-green-500 hover:bg-green-50 transition-colors has-[:checked]:border-green-500 has-[:checked]:bg-green-50">
+                                <input type="radio" name="study_music" value="1" class="w-4 h-4 text-green-600 border-gray-300 focus:ring-green-500" required>
                                 <span class="ml-2 text-gray-700">Ya</span>
                             </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="study_music" value="0" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-red-500 hover:bg-red-50 transition-colors has-[:checked]:border-red-500 has-[:checked]:bg-red-50">
+                                <input type="radio" name="study_music" value="0" class="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500">
                                 <span class="ml-2 text-gray-700">Tidak</span>
+                            </label>
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-amber-500 hover:bg-amber-50 transition-colors has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
+                                <input type="radio" name="study_music" value="2" class="w-4 h-4 text-amber-600 border-gray-300 focus:ring-amber-500">
+                                <span class="ml-2 text-gray-700">Kadang</span>
                             </label>
                         </div>
                     </div>
@@ -356,14 +400,18 @@
                             <p class="font-medium text-gray-900">Apakah Anda menerima tamu di kamar?</p>
                             <p class="text-sm text-gray-500">Teman atau keluarga berkunjung</p>
                         </div>
-                        <div class="flex gap-3">
-                            <label class="flex items-center">
-                                <input type="radio" name="guest_welcome" value="1" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" required>
+                        <div class="flex flex-wrap gap-3">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-green-500 hover:bg-green-50 transition-colors has-[:checked]:border-green-500 has-[:checked]:bg-green-50">
+                                <input type="radio" name="guest_welcome" value="1" class="w-4 h-4 text-green-600 border-gray-300 focus:ring-green-500" required>
                                 <span class="ml-2 text-gray-700">Ya</span>
                             </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="guest_welcome" value="0" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-red-500 hover:bg-red-50 transition-colors has-[:checked]:border-red-500 has-[:checked]:bg-red-50">
+                                <input type="radio" name="guest_welcome" value="0" class="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500">
                                 <span class="ml-2 text-gray-700">Tidak</span>
+                            </label>
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-amber-500 hover:bg-amber-50 transition-colors has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
+                                <input type="radio" name="guest_welcome" value="2" class="w-4 h-4 text-amber-600 border-gray-300 focus:ring-amber-500">
+                                <span class="ml-2 text-gray-700">Kadang</span>
                             </label>
                         </div>
                     </div>
@@ -374,14 +422,18 @@
                             <p class="font-medium text-gray-900">Apakah Anda lebih suka menyendiri?</p>
                             <p class="text-sm text-gray-500">Tipe introvert atau ekstrovert</p>
                         </div>
-                        <div class="flex gap-3">
-                            <label class="flex items-center">
-                                <input type="radio" name="introvert" value="1" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" required>
+                        <div class="flex flex-wrap gap-3">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-green-500 hover:bg-green-50 transition-colors has-[:checked]:border-green-500 has-[:checked]:bg-green-50">
+                                <input type="radio" name="introvert" value="1" class="w-4 h-4 text-green-600 border-gray-300 focus:ring-green-500" required>
                                 <span class="ml-2 text-gray-700">Ya</span>
                             </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="introvert" value="0" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-red-500 hover:bg-red-50 transition-colors has-[:checked]:border-red-500 has-[:checked]:bg-red-50">
+                                <input type="radio" name="introvert" value="0" class="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500">
                                 <span class="ml-2 text-gray-700">Tidak</span>
+                            </label>
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-amber-500 hover:bg-amber-50 transition-colors has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
+                                <input type="radio" name="introvert" value="2" class="w-4 h-4 text-amber-600 border-gray-300 focus:ring-amber-500">
+                                <span class="ml-2 text-gray-700">Kadang</span>
                             </label>
                         </div>
                     </div>
@@ -392,14 +444,18 @@
                             <p class="font-medium text-gray-900">Apakah Anda merokok?</p>
                             <p class="text-sm text-gray-500">Kebiasaan merokok</p>
                         </div>
-                        <div class="flex gap-3">
-                            <label class="flex items-center">
-                                <input type="radio" name="smoking" value="1" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" required>
+                        <div class="flex flex-wrap gap-3">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-green-500 hover:bg-green-50 transition-colors has-[:checked]:border-green-500 has-[:checked]:bg-green-50">
+                                <input type="radio" name="smoking" value="1" class="w-4 h-4 text-green-600 border-gray-300 focus:ring-green-500" required>
                                 <span class="ml-2 text-gray-700">Ya</span>
                             </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="smoking" value="0" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-red-500 hover:bg-red-50 transition-colors has-[:checked]:border-red-500 has-[:checked]:bg-red-50">
+                                <input type="radio" name="smoking" value="0" class="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500">
                                 <span class="ml-2 text-gray-700">Tidak</span>
+                            </label>
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-amber-500 hover:bg-amber-50 transition-colors has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
+                                <input type="radio" name="smoking" value="2" class="w-4 h-4 text-amber-600 border-gray-300 focus:ring-amber-500">
+                                <span class="ml-2 text-gray-700">Kadang</span>
                             </label>
                         </div>
                     </div>
@@ -410,14 +466,18 @@
                             <p class="font-medium text-gray-900">Apakah Anda suka hewan peliharaan?</p>
                             <p class="text-sm text-gray-500">Tidak keberatan dengan hewan di sekitar</p>
                         </div>
-                        <div class="flex gap-3">
-                            <label class="flex items-center">
-                                <input type="radio" name="pet_friendly" value="1" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500" required>
+                        <div class="flex flex-wrap gap-3">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-green-500 hover:bg-green-50 transition-colors has-[:checked]:border-green-500 has-[:checked]:bg-green-50">
+                                <input type="radio" name="pet_friendly" value="1" class="w-4 h-4 text-green-600 border-gray-300 focus:ring-green-500" required>
                                 <span class="ml-2 text-gray-700">Ya</span>
                             </label>
-                            <label class="flex items-center">
-                                <input type="radio" name="pet_friendly" value="0" class="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500">
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-red-500 hover:bg-red-50 transition-colors has-[:checked]:border-red-500 has-[:checked]:bg-red-50">
+                                <input type="radio" name="pet_friendly" value="0" class="w-4 h-4 text-red-600 border-gray-300 focus:ring-red-500">
                                 <span class="ml-2 text-gray-700">Tidak</span>
+                            </label>
+                            <label class="flex items-center px-3 py-1.5 border border-gray-200 rounded-lg cursor-pointer hover:border-amber-500 hover:bg-amber-50 transition-colors has-[:checked]:border-amber-500 has-[:checked]:bg-amber-50">
+                                <input type="radio" name="pet_friendly" value="2" class="w-4 h-4 text-amber-600 border-gray-300 focus:ring-amber-500">
+                                <span class="ml-2 text-gray-700">Kadang</span>
                             </label>
                         </div>
                     </div>

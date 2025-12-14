@@ -53,7 +53,7 @@
                 <div class="flex items-center space-x-4">
                     <div class="relative" x-data="{ open: false }">
                         <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
-                            <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-md">
+                            <div class="w-10 h-10 bg-gradient-to-br from-[#19608E] to-[#162D40] rounded-full flex items-center justify-center shadow-md">
                                 <span class="text-white font-semibold text-sm">{{ Auth::user()->initials }}</span>
                             </div>
                             <span class="hidden sm:block text-navy font-medium">{{ Auth::user()->name }}</span>
@@ -88,7 +88,7 @@
             <div class="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 px-6 py-10 relative">
                 <!-- Background Pattern -->
                 <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.08\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
-                
+
                 <div class="relative z-10 flex flex-col sm:flex-row items-center gap-6">
                     <!-- Avatar with Gender Color -->
                     <div class="relative">
@@ -108,7 +108,7 @@
                     <!-- User Info -->
                     <div class="text-center sm:text-left flex-1">
                         <h1 class="text-3xl font-bold text-white mb-2">{{ $user->name }}</h1>
-                        
+
                         <!-- Gender & Age Info -->
                         <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3 mb-4">
                             @if($user->gender)
@@ -151,9 +151,9 @@
                             <div class="relative w-20 h-20">
                                 <svg class="w-20 h-20 transform -rotate-90">
                                     <circle cx="40" cy="40" r="36" stroke="rgba(255,255,255,0.2)" stroke-width="6" fill="none"/>
-                                    <circle cx="40" cy="40" r="36" 
-                                        stroke="{{ $matchPercentage >= 80 ? '#22c55e' : ($matchPercentage >= 60 ? '#eab308' : ($matchPercentage >= 40 ? '#f97316' : '#ef4444')) }}" 
-                                        stroke-width="6" 
+                                    <circle cx="40" cy="40" r="36"
+                                        stroke="{{ $matchPercentage >= 80 ? '#22c55e' : ($matchPercentage >= 60 ? '#eab308' : ($matchPercentage >= 40 ? '#f97316' : '#ef4444')) }}"
+                                        stroke-width="6"
                                         fill="none"
                                         stroke-dasharray="{{ 2 * 3.14159 * 36 }}"
                                         stroke-dashoffset="{{ 2 * 3.14159 * 36 * (1 - $matchPercentage / 100) }}"

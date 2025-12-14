@@ -57,7 +57,7 @@
                 <div class="flex items-center space-x-4">
                     <div class="relative" x-data="{ open: false }">
                         <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
-                            <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-md">
+                            <div class="w-10 h-10 bg-gradient-to-br from-[#19608E] to-[#162D40] rounded-full flex items-center justify-center shadow-md">
                                 <span class="text-white font-semibold text-sm">{{ Auth::user()->initials }}</span>
                             </div>
                             <span class="hidden sm:block text-navy font-medium">{{ Auth::user()->name }}</span>
@@ -84,7 +84,7 @@
             <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=\"60\" height=\"60\" viewBox=\"0 0 60 60\" xmlns=\"http://www.w3.org/2000/svg\"%3E%3Cg fill=\"none\" fill-rule=\"evenodd\"%3E%3Cg fill=\"%23ffffff\" fill-opacity=\"0.08\"%3E%3Cpath d=\"M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z\"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
             <div class="relative z-10 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
                 <div>
-                    <h1 class="text-3xl md:text-4xl font-bold text-white mb-3">Temukan Teman Sekamar Ideal 🏠</h1>
+                    <h1 class="text-3xl md:text-4xl font-bold text-white mb-3">Temukan Teman Sekamar Ideal</h1>
                     <p class="text-blue-100 text-lg max-w-xl">Cocokkan preferensi Anda dengan calon teman sekamar untuk pengalaman tinggal yang nyaman</p>
                 </div>
                 <a href="{{ route('renter.room-match.edit') }}" class="inline-flex items-center px-6 py-3 bg-white text-indigo-600 font-semibold rounded-xl hover:bg-blue-50 transition-all shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
@@ -142,29 +142,29 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Preference Tags -->
                 <div class="flex-1">
                     <p class="text-sm text-gray-500 mb-2">Preferensi Anda:</p>
                     <div class="flex flex-wrap gap-2">
                         @if(Auth::user()->roommatePreference->sleep_lamp_off)
-                            <span class="px-3 py-1.5 bg-indigo-100 text-indigo-700 rounded-full text-xs font-medium">🌙 Lampu Mati</span>
+                            <span class="px-3 py-1.5 bg-indigo-100 text-indigo-700 rounded-full text-xs font-medium"> Lampu Mati</span>
                         @endif
                         @if(Auth::user()->roommatePreference->clean_daily)
-                            <span class="px-3 py-1.5 bg-teal-100 text-teal-700 rounded-full text-xs font-medium">✨ Rapi Harian</span>
+                            <span class="px-3 py-1.5 bg-teal-100 text-teal-700 rounded-full text-xs font-medium"> Rapi Harian</span>
                         @endif
                         @if(!Auth::user()->roommatePreference->smoking)
-                            <span class="px-3 py-1.5 bg-green-100 text-green-700 rounded-full text-xs font-medium">🚭 Non-Perokok</span>
+                            <span class="px-3 py-1.5 bg-green-100 text-green-700 rounded-full text-xs font-medium"> Non-Perokok</span>
                         @else
-                            <span class="px-3 py-1.5 bg-amber-100 text-amber-700 rounded-full text-xs font-medium">🚬 Perokok</span>
+                            <span class="px-3 py-1.5 bg-amber-100 text-amber-700 rounded-full text-xs font-medium"> Perokok</span>
                         @endif
                         @if(Auth::user()->roommatePreference->introvert)
-                            <span class="px-3 py-1.5 bg-purple-100 text-purple-700 rounded-full text-xs font-medium">🧘 Introvert</span>
+                            <span class="px-3 py-1.5 bg-purple-100 text-purple-700 rounded-full text-xs font-medium"> Introvert</span>
                         @else
-                            <span class="px-3 py-1.5 bg-orange-100 text-orange-700 rounded-full text-xs font-medium">🎉 Ekstrovert</span>
+                            <span class="px-3 py-1.5 bg-orange-100 text-orange-700 rounded-full text-xs font-medium"> Ekstrovert</span>
                         @endif
                         @if(Auth::user()->roommatePreference->pet_friendly)
-                            <span class="px-3 py-1.5 bg-pink-100 text-pink-700 rounded-full text-xs font-medium">🐾 Suka Hewan</span>
+                            <span class="px-3 py-1.5 bg-pink-100 text-pink-700 rounded-full text-xs font-medium"> Suka Hewan</span>
                         @endif
                     </div>
                 </div>
@@ -202,7 +202,7 @@
         @if($matches->count() > 0)
             <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 @foreach($matches as $match)
-                    <div class="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-indigo-200 transform hover:-translate-y-1">
+                    <div class="group bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100 hover:border-[#19608E]/30 transform hover:-translate-y-1">
                         <!-- Card Header with Match Ring -->
                         <div class="relative p-6 pb-4">
                             <!-- Match Percentage Circle -->
@@ -210,9 +210,9 @@
                                 <div class="relative w-16 h-16">
                                     <svg class="w-16 h-16 transform -rotate-90">
                                         <circle cx="32" cy="32" r="28" stroke="#e5e7eb" stroke-width="4" fill="none"/>
-                                        <circle cx="32" cy="32" r="28" 
-                                            stroke="{{ $match['match_percentage'] >= 80 ? '#22c55e' : ($match['match_percentage'] >= 60 ? '#eab308' : ($match['match_percentage'] >= 40 ? '#f97316' : '#ef4444')) }}" 
-                                            stroke-width="4" 
+                                        <circle cx="32" cy="32" r="28"
+                                            stroke="{{ $match['match_percentage'] >= 80 ? '#22c55e' : ($match['match_percentage'] >= 60 ? '#eab308' : ($match['match_percentage'] >= 40 ? '#f97316' : '#ef4444')) }}"
+                                            stroke-width="4"
                                             fill="none"
                                             stroke-dasharray="{{ 2 * 3.14159 * 28 }}"
                                             stroke-dashoffset="{{ 2 * 3.14159 * 28 * (1 - $match['match_percentage'] / 100) }}"
@@ -265,7 +265,7 @@
                         <!-- Description -->
                         <div class="px-6">
                             @if($match['preference']->description)
-                                <p class="text-gray-600 text-sm line-clamp-2 italic border-l-2 border-indigo-200 pl-3">
+                                <p class="text-gray-600 text-sm line-clamp-2 italic border-l-2 border-[#19608E]/30 pl-3">
                                     "{{ Str::limit($match['preference']->description, 100) }}"
                                 </p>
                             @else
@@ -278,30 +278,30 @@
                             <div class="flex flex-wrap gap-1.5">
                                 @if(!$match['preference']->smoking)
                                     <span class="inline-flex items-center px-2 py-1 bg-green-50 text-green-700 rounded-lg text-xs font-medium">
-                                        🚭 Non-Perokok
+                                         Non-Perokok
                                     </span>
                                 @else
                                     <span class="inline-flex items-center px-2 py-1 bg-amber-50 text-amber-700 rounded-lg text-xs font-medium">
-                                        🚬 Perokok
+                                         Perokok
                                     </span>
                                 @endif
                                 @if($match['preference']->introvert)
                                     <span class="inline-flex items-center px-2 py-1 bg-purple-50 text-purple-700 rounded-lg text-xs font-medium">
-                                        🧘 Introvert
+                                         Introvert
                                     </span>
                                 @else
                                     <span class="inline-flex items-center px-2 py-1 bg-orange-50 text-orange-700 rounded-lg text-xs font-medium">
-                                        🎉 Ekstrovert
+                                         Ekstrovert
                                     </span>
                                 @endif
                                 @if($match['preference']->clean_daily)
                                     <span class="inline-flex items-center px-2 py-1 bg-teal-50 text-teal-700 rounded-lg text-xs font-medium">
-                                        ✨ Rapi
+                                         Rapi
                                     </span>
                                 @endif
                                 @if($match['preference']->sleep_lamp_off)
-                                    <span class="inline-flex items-center px-2 py-1 bg-indigo-50 text-indigo-700 rounded-lg text-xs font-medium">
-                                        🌙 Lampu Mati
+                                    <span class="inline-flex items-center px-2 py-1 bg-indigo-100 text-indigo-600 rounded-lg text-xs font-medium">
+                                         Lampu Mati
                                     </span>
                                 @endif
                             </div>
@@ -309,7 +309,7 @@
 
                         <!-- Action Button -->
                         <div class="px-6 pb-6">
-                            <a href="{{ route('renter.room-match.show', $match['user']->id) }}" 
+                            <a href="{{ route('renter.room-match.show', $match['user']->id) }}"
                                class="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gradient-to-r from-indigo-600 to-blue-600 text-white font-semibold rounded-xl hover:from-indigo-700 hover:to-blue-700 transition-all shadow-md hover:shadow-lg">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -324,7 +324,7 @@
         @else
             <!-- Empty State -->
             <div class="text-center py-20 bg-white rounded-2xl shadow-sm border border-gray-100">
-                <div class="w-24 h-24 bg-gradient-to-br from-indigo-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                <div class="w-24 h-24 bg-gradient-to-br from-[#19608E]/20 to-[#162D40]/20 rounded-full flex items-center justify-center mx-auto mb-6">
                     <svg class="w-12 h-12 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                     </svg>
