@@ -51,7 +51,7 @@
                     <a href="{{ route('renter.dashboard') }}" class="text-gray-600 hover:text-navy transition-colors">Beranda</a>
                     <a href="{{ route('renter.kos.search') }}" class="text-gray-600 hover:text-navy transition-colors">Cari Kos</a>
                     <a href="{{ route('renter.room-match.index') }}" class="text-navy font-medium">Cari Teman</a>
-                    <a href="#" class="text-gray-600 hover:text-navy transition-colors">Pemesanan</a>
+                    <a href="{{ route('renter.orders.index') }}" class="text-gray-600 hover:text-navy transition-colors">Pemesanan</a>
                 </div>
 
                 <div class="flex items-center space-x-4">

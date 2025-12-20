@@ -2,15 +2,35 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Owner\OwnerKostController;
+use App\Http\Controllers\Renter\BookingController;
+use App\Http\Controllers\Renter\OrderController;
 use App\Http\Controllers\Renter\RenterDashboardController;
+use App\Http\Controllers\Renter\ReviewController;
 use App\Http\Controllers\Renter\RoomMatchController;
 use App\Http\Controllers\Renter\SearchController;
+use App\Models\BoardingHouse;
+use App\Models\Review;
 use Illuminate\Support\Facades\Route;
 
 // Landing Page
 Route::get('/', function () {
-    return view('landing');
+    $boardingHouses = BoardingHouse::where('status', 'active')
+        ->orderBy('created_at', 'desc')
+        ->take(8)
+        ->get();
+
+    // Get published reviews for landing page
+    $reviews = Review::where('is_published', true)
+        ->with(['user', 'boardingHouse'])
+        ->orderBy('created_at', 'desc')
+        ->take(6)
+        ->get();
+
+    return view('landing', compact('boardingHouses', 'reviews'));
 })->name('home');
+
+// Kost Detail - requires login
+Route::get('/kost/{slug}', [RenterDashboardController::class, 'showKos'])->middleware('auth')->name('kost.detail');
 
 // Guest Routes (only accessible when not logged in)
 Route::middleware('guest')->group(function () {
@@ -53,6 +73,24 @@ Route::middleware('auth')->group(function () {
         Route::get('/kost/{boardingHouse}/edit', [OwnerKostController::class, 'edit'])->name('kost.edit');
         Route::put('/kost/{boardingHouse}', [OwnerKostController::class, 'update'])->name('kost.update');
         Route::delete('/kost/{boardingHouse}', [OwnerKostController::class, 'destroy'])->name('kost.destroy');
+
+        // Room Management
+        Route::get('/kost/{boardingHouse}/rooms', [\App\Http\Controllers\Owner\RoomManagementController::class, 'index'])->name('rooms.index');
+        Route::post('/kost/{boardingHouse}/rooms', [\App\Http\Controllers\Owner\RoomManagementController::class, 'store'])->name('rooms.store');
+        Route::post('/kost/{boardingHouse}/rooms/bulk', [\App\Http\Controllers\Owner\RoomManagementController::class, 'bulkStore'])->name('rooms.bulk-store');
+        Route::patch('/kost/{boardingHouse}/rooms/{room}/status', [\App\Http\Controllers\Owner\RoomManagementController::class, 'updateStatus'])->name('rooms.update-status');
+        Route::delete('/kost/{boardingHouse}/rooms/{room}', [\App\Http\Controllers\Owner\RoomManagementController::class, 'destroy'])->name('rooms.destroy');
+
+        // Booking Management
+        Route::get('/bookings', [\App\Http\Controllers\Owner\BookingManagementController::class, 'index'])->name('bookings.index');
+        Route::get('/bookings/{booking}', [\App\Http\Controllers\Owner\BookingManagementController::class, 'show'])->name('bookings.show');
+        Route::post('/bookings/{booking}/approve', [\App\Http\Controllers\Owner\BookingManagementController::class, 'approve'])->name('bookings.approve');
+        Route::post('/bookings/{booking}/reject', [\App\Http\Controllers\Owner\BookingManagementController::class, 'reject'])->name('bookings.reject');
+        Route::post('/bookings/{booking}/complete', [\App\Http\Controllers\Owner\BookingManagementController::class, 'complete'])->name('bookings.complete');
+
+        // Profile & Settings
+        Route::get('/profile', [\App\Http\Controllers\Owner\ProfileController::class, 'index'])->name('profile.index');
+        Route::put('/profile', [\App\Http\Controllers\Owner\ProfileController::class, 'update'])->name('profile.update');
     });
 
     // Renter Routes (only renter)
@@ -65,6 +103,22 @@ Route::middleware('auth')->group(function () {
 
         // Cari Kos (Search)
         Route::get('/cari-kos', [SearchController::class, 'index'])->name('kos.search');
+
+        // Booking
+        Route::get('/booking/{slug}', [BookingController::class, 'create'])->name('booking.create');
+        Route::post('/booking', [BookingController::class, 'store'])->name('booking.store');
+        Route::post('/booking/{booking}/payment-proof', [BookingController::class, 'uploadPaymentProof'])->name('booking.payment-proof');
+        Route::post('/booking/{booking}/cancel', [BookingController::class, 'cancel'])->name('booking.cancel');
+        Route::post('/booking/{booking}/accept-shared', [BookingController::class, 'acceptSharedBooking'])->name('booking.accept-shared');
+        Route::post('/booking/{booking}/reject-shared', [BookingController::class, 'rejectSharedBooking'])->name('booking.reject-shared');
+
+        // Orders / Pemesanan
+        Route::get('/pemesanan', [OrderController::class, 'index'])->name('orders.index');
+        Route::get('/pemesanan/{booking}', [OrderController::class, 'show'])->name('orders.show');
+        Route::get('/pemesanan/{booking}/download-receipt', [OrderController::class, 'downloadReceipt'])->name('orders.download-receipt');
+
+        // Reviews
+        Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
 
         // Room Match / Cari Teman
         Route::get('/room-match', [RoomMatchController::class, 'index'])->name('room-match.index');

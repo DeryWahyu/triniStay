@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Owner;
 
 use App\Http\Controllers\Controller;
 use App\Models\BoardingHouse;
+use App\Models\Room;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -72,6 +73,7 @@ class OwnerKostController extends Controller
             'name' => 'required|string|max:255',
             'type' => 'required|in:putra,putri,campur',
             'price_monthly' => 'required|numeric|min:0',
+            'price_3months' => 'nullable|numeric|min:0',
             'price_6months' => 'nullable|numeric|min:0',
             'price_yearly' => 'nullable|numeric|min:0',
             'room_size' => 'nullable|string|max:50',
@@ -121,6 +123,7 @@ class OwnerKostController extends Controller
             'slug' => Str::slug($validated['name']) . '-' . Str::random(6),
             'price' => $validated['price_monthly'], // Keep old column for backward compatibility
             'price_monthly' => $validated['price_monthly'],
+            'price_3months' => $validated['price_3months'] ?? null,
             'price_6months' => $validated['price_6months'] ?? null,
             'price_yearly' => $validated['price_yearly'] ?? null,
             'room_size' => $validated['room_size'] ?? null,
@@ -139,6 +142,9 @@ class OwnerKostController extends Controller
             'room_match_price' => $validated['room_match_price'] ?? null,
             'room_match_period' => $validated['room_match_period'] ?? null,
         ]);
+
+        // Auto-create rooms based on total_rooms
+        $this->createRoomsForBoardingHouse($boardingHouse, $validated['total_rooms'], $validated['available_rooms']);
 
         return redirect()
             ->route('owner.dashboard')
@@ -172,6 +178,7 @@ class OwnerKostController extends Controller
             'name' => 'required|string|max:255',
             'type' => 'required|in:putra,putri,campur',
             'price_monthly' => 'required|numeric|min:0',
+            'price_3months' => 'nullable|numeric|min:0',
             'price_6months' => 'nullable|numeric|min:0',
             'price_yearly' => 'nullable|numeric|min:0',
             'room_size' => 'nullable|string|max:50',
@@ -220,6 +227,7 @@ class OwnerKostController extends Controller
             'type' => $validated['type'],
             'price' => $validated['price_monthly'], // Keep old column for backward compatibility
             'price_monthly' => $validated['price_monthly'],
+            'price_3months' => $validated['price_3months'] ?? null,
             'price_6months' => $validated['price_6months'] ?? null,
             'price_yearly' => $validated['price_yearly'] ?? null,
             'room_size' => $validated['room_size'] ?? null,
@@ -239,6 +247,9 @@ class OwnerKostController extends Controller
             'room_match_price' => $validated['room_match_price'] ?? null,
             'room_match_period' => $validated['room_match_period'] ?? null,
         ]);
+
+        // Sync rooms based on total_rooms (add/remove as needed)
+        $this->syncRoomsForBoardingHouse($boardingHouse, $validated['total_rooms'], $validated['available_rooms']);
 
         return redirect()
             ->route('owner.kost.index')
@@ -269,5 +280,73 @@ class OwnerKostController extends Controller
         return redirect()
             ->route('owner.kost.index')
             ->with('success', 'Kos "' . $name . '" berhasil dihapus!');
+    }
+
+    /**
+     * Auto-create rooms for a new boarding house.
+     */
+    private function createRoomsForBoardingHouse(BoardingHouse $boardingHouse, int $totalRooms, int $availableRooms): void
+    {
+        $occupiedRooms = $totalRooms - $availableRooms;
+
+        for ($i = 1; $i <= $totalRooms; $i++) {
+            Room::create([
+                'boarding_house_id' => $boardingHouse->id,
+                'room_number' => (string) $i,
+                'floor' => 1, // Default to floor 1
+                'status' => $i <= $availableRooms ? 'available' : 'occupied',
+            ]);
+        }
+    }
+
+    /**
+     * Sync rooms when updating boarding house.
+     * Add new rooms if total increased, or mark excess as maintenance if decreased.
+     */
+    private function syncRoomsForBoardingHouse(BoardingHouse $boardingHouse, int $newTotalRooms, int $newAvailableRooms): void
+    {
+        $existingRooms = $boardingHouse->rooms()->orderBy('room_number')->get();
+        $existingCount = $existingRooms->count();
+
+        // If we need more rooms, add them
+        if ($newTotalRooms > $existingCount) {
+            for ($i = $existingCount + 1; $i <= $newTotalRooms; $i++) {
+                Room::create([
+                    'boarding_house_id' => $boardingHouse->id,
+                    'room_number' => (string) $i,
+                    'floor' => 1,
+                    'status' => 'available',
+                ]);
+            }
+        }
+        // If we have fewer rooms needed, don't delete but update counts
+        // The extra rooms will just exist but owner can manage them via Kelola Kamar
+
+        // Update available_rooms count in boarding house based on actual room status
+        $actualAvailable = $boardingHouse->rooms()->where('status', 'available')->count();
+        if ($actualAvailable != $newAvailableRooms) {
+            // If owner specified different available rooms, adjust status of rooms accordingly
+            $roomsToMakeAvailable = $newAvailableRooms;
+            $roomsToMakeOccupied = $newTotalRooms - $newAvailableRooms;
+
+            // Reset room statuses based on new counts (only for rooms without active bookings)
+            $allRooms = $boardingHouse->rooms()
+                ->whereDoesntHave('bookings', function($q) {
+                    $q->whereIn('status', ['pending', 'approved'])
+                      ->where('end_date', '>=', now());
+                })
+                ->orderBy('room_number')
+                ->get();
+
+            $counter = 0;
+            foreach ($allRooms as $room) {
+                if ($counter < $roomsToMakeAvailable) {
+                    $room->update(['status' => 'available']);
+                } else {
+                    $room->update(['status' => 'occupied']);
+                }
+                $counter++;
+            }
+        }
     }
 }

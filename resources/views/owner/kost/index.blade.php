@@ -127,6 +127,12 @@
                                         <span class="text-sm opacity-80">Harga per Bulan</span>
                                         <p class="text-2xl font-bold">{{ $kost->formatted_price_monthly }}</p>
                                     </div>
+                                    @if($kost->price_3months)
+                                        <div class="text-white border-l border-blue-400 pl-6">
+                                            <span class="text-sm opacity-80">Per 3 Bulan</span>
+                                            <p class="text-lg font-semibold">{{ $kost->formatted_price_3months }}</p>
+                                        </div>
+                                    @endif
                                     @if($kost->price_6months)
                                         <div class="text-white border-l border-blue-400 pl-6">
                                             <span class="text-sm opacity-80">Per 6 Bulan</span>
@@ -143,14 +149,14 @@
 
                                 <!-- Tags -->
                                 <div class="flex flex-wrap items-center gap-3">
-                                    <span class="px-4 py-2 bg-white rounded-full text-sm font-semibold {{ $kost->type === 'putra' ? 'text-blue-600' : ($kost->type === 'putri' ? 'text-pink-600' : 'text-purple-600') }}">
+                                    <span class="px-4 py-2 bg-white rounded-full text-sm font-semibold text-blue-600">
                                         {{ $kost->type_label }}
                                     </span>
-                                    <span class="px-4 py-2 bg-yellow-400 text-gray-900 rounded-full text-sm font-semibold">
-                                        Sisa {{ $kost->available_rooms }} Kamar
+                                    <span class="px-4 py-2 bg-white rounded-full text-sm font-semibold text-blue-600">
+                                        Sisa {{ $kost->available_rooms_count }} Kamar
                                     </span>
                                     @if($kost->is_room_match_enabled)
-                                        <span class="px-4 py-2 bg-green-400 text-gray-900 rounded-full text-sm font-semibold">
+                                        <span class="px-4 py-2 bg-white rounded-full text-sm font-semibold text-blue-600">
                                             Room Match
                                         </span>
                                     @endif
@@ -182,7 +188,7 @@
                                             </div>
                                             <div class="flex justify-between">
                                                 <span class="text-gray-600">Kamar Tersedia</span>
-                                                <span class="font-semibold text-green-600">{{ $kost->available_rooms }} Kamar</span>
+                                                <span class="font-semibold text-green-600">{{ $kost->available_rooms_count }} Kamar</span>
                                             </div>
                                         </div>
                                     </div>
@@ -335,6 +341,14 @@
 
                             <!-- Action Footer -->
                             <div class="flex flex-col sm:flex-row gap-4 pt-4 border-t border-gray-200">
+                                <a href="{{ route('owner.rooms.index', $kost) }}"
+                                   class="flex-1 inline-flex items-center justify-center px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors font-semibold">
+                                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+                                    </svg>
+                                    Kelola Kamar
+                                </a>
+
                                 <a href="{{ route('owner.kost.edit', $kost) }}"
                                    class="flex-1 inline-flex items-center justify-center px-6 py-3 bg-green-600 text-white rounded-xl hover:bg-green-700 transition-colors font-semibold">
                                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">

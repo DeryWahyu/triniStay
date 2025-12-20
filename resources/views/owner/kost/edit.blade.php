@@ -113,7 +113,7 @@
                 Harga Sewa
             </h3>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <!-- Price Monthly -->
                 <div>
                     <label for="price_monthly" class="block text-sm font-medium text-gray-700 mb-2">
@@ -134,6 +134,25 @@
                     @error('price_monthly')
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                     @enderror
+                </div>
+
+                <!-- Price 3 Months -->
+                <div>
+                    <label for="price_3months" class="block text-sm font-medium text-gray-700 mb-2">
+                        Harga per 3 Bulan
+                    </label>
+                    <div class="relative">
+                        <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500">Rp</span>
+                        <input
+                            type="number"
+                            name="price_3months"
+                            id="price_3months"
+                            value="{{ old('price_3months', $boardingHouse->price_3months) }}"
+                            placeholder="1400000"
+                            class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                        >
+                    </div>
+                    <p class="mt-1 text-xs text-gray-500">Kosongkan jika tidak tersedia</p>
                 </div>
 
                 <!-- Price 6 Months -->

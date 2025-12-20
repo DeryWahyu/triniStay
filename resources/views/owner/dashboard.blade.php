@@ -135,7 +135,7 @@
                                 <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                                 </svg>
-                                {{ $latestKos->available_rooms }} dari {{ $latestKos->total_rooms }} kamar tersedia
+                                {{ $latestKos->available_rooms_count }} dari {{ $latestKos->total_rooms }} kamar tersedia
                             </div>
                             <div class="flex items-center">
                                 <svg class="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -312,7 +312,7 @@
                                     <span class="font-semibold text-gray-900">{{ $kos->formatted_price }}</span>
                                 </td>
                                 <td class="py-4">
-                                    <span class="text-gray-600">{{ $kos->available_rooms }}/{{ $kos->total_rooms }}</span>
+                                    <span class="text-gray-600">{{ $kos->available_rooms_count }}/{{ $kos->total_rooms }}</span>
                                 </td>
                                 <td class="py-4">
                                     <span class="px-2 py-1 text-xs font-medium rounded-full
@@ -354,7 +354,7 @@ document.addEventListener('DOMContentLoaded', function() {
             lat: {{ $kos->latitude ?? 'null' }},
             lng: {{ $kos->longitude ?? 'null' }},
             image: "{{ $kos->first_image }}",
-            available_rooms: {{ $kos->available_rooms }},
+            available_rooms: {{ $kos->available_rooms_count }},
             total_rooms: {{ $kos->total_rooms }},
             room_match: {{ $kos->is_room_match_enabled ? 'true' : 'false' }},
             edit_url: "{{ route('owner.kost.edit', $kos->id) }}"

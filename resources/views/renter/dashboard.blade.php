@@ -56,7 +56,7 @@
                         <a href="{{ route('renter.dashboard') }}" class="text-white font-medium hover:text-gray-300 transition-colors">Beranda</a>
                         <a href="{{ route('renter.kos.search') }}" class="text-white/80 hover:text-white transition-colors">Cari Kos</a>
                         <a href="{{ route('renter.room-match.index') }}" class="text-white/80 hover:text-white transition-colors">Cari Teman</a>
-                        <a href="#" class="text-white/80 hover:text-white transition-colors">Pemesanan</a>
+                        <a href="{{ route('renter.orders.index') }}" class="text-white/80 hover:text-white transition-colors">Pemesanan</a>
                     </div>
 
                     <!-- User Profile -->
@@ -73,7 +73,7 @@
                             <div x-show="open" @click.away="open = false" x-cloak
                                  class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg py-2 z-50 border border-gray-100">
                                 <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-50">Profil Saya</a>
-                                <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Pemesanan</a>
+                                <a href="{{ route('renter.orders.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Pemesanan</a>
                                 <hr class="my-2">
                                 <form action="{{ route('logout') }}" method="POST">
                                     @csrf
@@ -283,7 +283,7 @@
                         <li><a href="{{ route('renter.dashboard') }}" class="text-gray-400 hover:text-white transition-colors">Beranda</a></li>
                         <li><a href="{{ route('renter.kos.search') }}" class="text-gray-400 hover:text-white transition-colors">Cari Kos</a></li>
                         <li><a href="{{ route('renter.room-match.index') }}" class="text-gray-400 hover:text-white transition-colors">Cari Teman</a></li>
-                        <li><a href="#" class="text-gray-400 hover:text-white transition-colors">Pemesanan</a></li>
+                        <li><a href="{{ route('renter.orders.index') }}" class="text-gray-400 hover:text-white transition-colors">Pemesanan</a></li>
                     </ul>
                 </div>
 

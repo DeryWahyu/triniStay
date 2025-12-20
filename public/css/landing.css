@@ -197,6 +197,7 @@ body {
 }
 
 .property-image {
+    position: relative;
     width: 100%;
     height: 280px;
     overflow: hidden;
@@ -207,6 +208,32 @@ body {
     height: 100%;
     object-fit: cover;
     transition: transform 0.3s ease;
+}
+
+.property-type-badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.badge-putra {
+    background: #DBEAFE;
+    color: #1D4ED8;
+}
+
+.badge-putri {
+    background: #FCE7F3;
+    color: #BE185D;
+}
+
+.badge-campur {
+    background: #EDE9FE;
+    color: #7C3AED;
 }
 
 .property-card:hover .property-image img {
@@ -243,6 +270,12 @@ body {
     font-weight: 600;
 }
 
+.price-period {
+    font-size: 12px;
+    font-weight: 400;
+    color: #9CA3AF;
+}
+
 .price-old {
     font-size: 14px;
     text-decoration: line-through;
@@ -259,12 +292,22 @@ body {
     font-size: 14px;
     font-weight: 500;
     cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
     transition: background 0.3s ease, color 0.3s ease;
 }
 
 .btn-detail:hover {
     background: #3B82F6;
     color: white;
+}
+
+.no-kost-message {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: #6B7280;
+    font-size: 18px;
 }
 
 /* Carousel Pagination */

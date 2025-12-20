@@ -57,69 +57,42 @@
 
             <div class="carousel-wrapper">
                 <div class="carousel-container">
+                    @forelse($boardingHouses as $kost)
                     <div class="property-card">
                         <div class="property-image">
-                            <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80" alt="Kos Pot Bombong D">
+                            @if($kost->images && count($kost->images) > 0)
+                                <img src="{{ asset('storage/' . $kost->images[0]) }}" alt="{{ $kost->name }}">
+                            @else
+                                <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80" alt="{{ $kost->name }}">
+                            @endif
+                            <span class="property-type-badge {{ $kost->type === 'putra' ? 'badge-putra' : ($kost->type === 'putri' ? 'badge-putri' : 'badge-campur') }}">
+                                {{ $kost->type_label }}
+                            </span>
                         </div>
                         <div class="property-info">
-                            <h3 class="property-name">Kos Pot Bombong D</h3>
-                            <p class="property-location">Kreo, 1 Orangan, kampung, Sidomu</p>
+                            <h3 class="property-name">{{ $kost->name }}</h3>
+                            <p class="property-location">{{ Str::limit($kost->address, 40) }}</p>
                             <div class="property-footer">
-                                <p class="property-price">Rp. 6.500.000</p>
-                                <button class="btn-detail">Detail Now</button>
+                                <p class="property-price">{{ $kost->formatted_price_monthly }}<span class="price-period">/bulan</span></p>
+                                <a href="{{ route('kost.detail', $kost->slug) }}" class="btn-detail">Lihat Detail</a>
                             </div>
                         </div>
                     </div>
-
-                    <div class="property-card">
-                        <div class="property-image">
-                            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80" alt="Kost Putri Muslim SS">
-                        </div>
-                        <div class="property-info">
-                            <h3 class="property-name">Kost Putri Muslim SS</h3>
-                            <p class="property-location">Full Mebilang, estetik, kamera</p>
-                            <div class="property-footer">
-                                <p class="property-price">Rp.12.50 <span class="price-old">Rp13.20</span></p>
-                                <button class="btn-detail">Detail Now</button>
-                            </div>
-                        </div>
+                    @empty
+                    <div class="no-kost-message">
+                        <p>Belum ada kos yang tersedia saat ini.</p>
                     </div>
-
-                    <div class="property-card">
-                        <div class="property-image">
-                            <img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80" alt="Raspberry French Toast">
-                        </div>
-                        <div class="property-info">
-                            <h3 class="property-name">Raspberry French Toast</h3>
-                            <p class="property-location">Melati. JI. SS selundung I Pleret. I</p>
-                            <div class="property-footer">
-                                <p class="property-price">Rp.12.50 <span class="price-old">Rp13.20</span></p>
-                                <button class="btn-detail">Detail Now</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="property-card">
-                        <div class="property-image">
-                            <img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80" alt="Modern Kost Elite">
-                        </div>
-                        <div class="property-info">
-                            <h3 class="property-name">Modern Kost Elite</h3>
-                            <p class="property-location">Pusat Kota, Dekat Kampus, Fasilitas Lengkap</p>
-                            <div class="property-footer">
-                                <p class="property-price">Rp. 5.000.000</p>
-                                <button class="btn-detail">Detail Now</button>
-                            </div>
-                        </div>
-                    </div>
+                    @endforelse
                 </div>
             </div>
 
+            @if($boardingHouses->count() > 3)
             <div class="carousel-pagination">
-                <span class="dot active" data-slide="0"></span>
-                <span class="dot" data-slide="1"></span>
-                <span class="dot" data-slide="2"></span>
+                @for($i = 0; $i < ceil($boardingHouses->count() / 3); $i++)
+                <span class="dot {{ $i === 0 ? 'active' : '' }}" data-slide="{{ $i }}"></span>
+                @endfor
             </div>
+            @endif
         </div>
     </section>
 
@@ -143,10 +116,26 @@
 
             <div class="testimonials-carousel-wrapper">
                 <div class="testimonials-container">
+                    @forelse($reviews as $review)
                     <div class="testimonial-card">
                         <div class="quote-icon">"</div>
                         <p class="testimonial-text">
-                            "Tinggal kos di stardom TriniStay gak perlu gelisah karena harga bisa dijangkau semua kalangan, aslinya berkelas banget. Kamar nyaman dan fasilitas lengkap! Mantap & murah. Dan tempatnya dan terjibetnya"
+                            "{{ Str::limit($review->comment, 200) }}"
+                        </p>
+                        <div class="rating">
+                            @for($i = 1; $i <= 5; $i++)
+                                <span class="star {{ $i <= $review->rating ? '' : 'empty' }}">★</span>
+                            @endfor
+                        </div>
+                        <p class="reviewer-name">{{ $review->user->name }}</p>
+                        <p class="reviewer-kost" style="font-size: 12px; color: #666; margin-top: 4px;">{{ $review->boardingHouse->name }}</p>
+                    </div>
+                    @empty
+                    <!-- Default testimonials if no reviews from database -->
+                    <div class="testimonial-card">
+                        <div class="quote-icon">"</div>
+                        <p class="testimonial-text">
+                            "Tinggal kos di TriniStay sangat nyaman. Kamar bersih, fasilitas lengkap, dan harga terjangkau. Sangat recommended untuk mahasiswa!"
                         </p>
                         <div class="rating">
                             <span class="star">★</span>
@@ -155,13 +144,13 @@
                             <span class="star">★</span>
                             <span class="star empty">★</span>
                         </div>
-                        <p class="reviewer-name">Nurkholisah</p>
+                        <p class="reviewer-name">Penyewa TriniStay</p>
                     </div>
 
                     <div class="testimonial-card">
                         <div class="quote-icon">"</div>
                         <p class="testimonial-text">
-                            "Tempatnya serbus up legend dan nya. Yang paling bikin nyaman ini adalah pemiliknya yang ramah dan tempatnya yang bersih juga banyak perayaan yang mengangkat setiap saat seperti di. Jadi bisa lebih dekat dan nyaman ya nya"
+                            "Sistem pencarian teman sekamar sangat membantu! Saya menemukan roommate yang cocok dan kami jadi teman baik. TriniStay tidak hanya tempat tinggal, tapi juga tempat membangun persahabatan baru."
                         </p>
                         <div class="rating">
                             <span class="star">★</span>
@@ -170,28 +159,13 @@
                             <span class="star">★</span>
                             <span class="star">★</span>
                         </div>
-                        <p class="reviewer-name">Anggi Septiani</p>
+                        <p class="reviewer-name">Penyewa TriniStay</p>
                     </div>
 
                     <div class="testimonial-card">
                         <div class="quote-icon">"</div>
                         <p class="testimonial-text">
-                            "Buat kalangan self care bercampur dengan nya. Pada kolam dapat materi yang sekaligus kita cari kepribadian ataupun kecocokan seperti ya masih baik gak ganggu kita kalo misalkan"
-                        </p>
-                        <div class="rating">
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star empty">★</span>
-                        </div>
-                        <p class="reviewer-name">Dinar Aulia</p>
-                    </div>
-
-                    <div class="testimonial-card">
-                        <div class="quote-icon">"</div>
-                        <p class="testimonial-text">
-                            "Sistem pencarian teman sekamar sangat membantu! Saya menemukan roommate yang cocok dan kami jadi teman baik. Kos di TriniStay tidak hanya tempat tinggal, tapi juga tempat membangun persahabatan baru."
+                            "Platform yang user-friendly dan proses booking sangat cepat. Dalam hitungan hari saya sudah bisa pindah ke kos baru. Recommended banget untuk mahasiswa yang butuh tempat tinggal nyaman!"
                         </p>
                         <div class="rating">
                             <span class="star">★</span>
@@ -200,31 +174,20 @@
                             <span class="star">★</span>
                             <span class="star">★</span>
                         </div>
-                        <p class="reviewer-name">Rizki Pratama</p>
+                        <p class="reviewer-name">Penyewa TriniStay</p>
                     </div>
-
-                    <div class="testimonial-card">
-                        <div class="quote-icon">"</div>
-                        <p class="testimonial-text">
-                            "Platform yang user-friendly dan proses booking sangat cepat. Dalam hitungan hari saya sudah bisa pindah ke kos baru. Recommended banget untuk mahasiswa yang butuh tempat tinggal nyaman dan terjangkau!"
-                        </p>
-                        <div class="rating">
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                            <span class="star">★</span>
-                        </div>
-                        <p class="reviewer-name">Sarah Melinda</p>
-                    </div>
+                    @endforelse
                 </div>
             </div>
 
+            @if($reviews->count() > 3 || $reviews->isEmpty())
             <div class="testimonials-pagination">
-                <span class="dot active" data-testimonial-slide="0"></span>
-                <span class="dot" data-testimonial-slide="1"></span>
-                <span class="dot" data-testimonial-slide="2"></span>
+                @php $totalSlides = $reviews->count() > 0 ? ceil($reviews->count() / 3) : 1; @endphp
+                @for($i = 0; $i < max($totalSlides, 1); $i++)
+                <span class="dot {{ $i === 0 ? 'active' : '' }}" data-testimonial-slide="{{ $i }}"></span>
+                @endfor
             </div>
+            @endif
         </div>
     </section>
 

@@ -18,6 +18,7 @@ class BoardingHouse extends Model
         'slug',
         'price',
         'price_monthly',
+        'price_3months',
         'price_6months',
         'price_yearly',
         'room_size',
@@ -46,6 +47,7 @@ class BoardingHouse extends Model
         'is_room_match_enabled' => 'boolean',
         'price' => 'integer',
         'price_monthly' => 'integer',
+        'price_3months' => 'integer',
         'price_6months' => 'integer',
         'price_yearly' => 'integer',
         'room_match_price' => 'integer',
@@ -76,6 +78,81 @@ class BoardingHouse extends Model
     }
 
     /**
+     * Alias for owner relationship.
+     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    /**
+     * Get the rooms for this boarding house.
+     */
+    public function rooms()
+    {
+        return $this->hasMany(Room::class);
+    }
+
+    /**
+     * Get the bookings for this boarding house.
+     */
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class);
+    }
+
+    /**
+     * Get the reviews for this boarding house.
+     */
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    /**
+     * Get average rating.
+     */
+    public function getAverageRatingAttribute()
+    {
+        return $this->reviews()->published()->avg('rating') ?? 0;
+    }
+
+    /**
+     * Get reviews count.
+     */
+    public function getReviewsCountAttribute()
+    {
+        return $this->reviews()->published()->count();
+    }
+
+    /**
+     * Get truly available rooms count (excluding rooms with pending/approved bookings).
+     */
+    public function getAvailableRoomsCountAttribute()
+    {
+        return $this->rooms()
+            ->where('status', 'available')
+            ->whereDoesntHave('bookings', function ($query) {
+                $query->whereIn('status', ['pending', 'approved'])
+                    ->where('end_date', '>=', now());
+            })
+            ->count();
+    }
+
+    /**
+     * Get count of rooms currently booked (pending or approved).
+     */
+    public function getBookedRoomsCountAttribute()
+    {
+        return $this->rooms()
+            ->whereHas('bookings', function ($query) {
+                $query->whereIn('status', ['pending', 'approved'])
+                    ->where('end_date', '>=', now());
+            })
+            ->count();
+    }
+
+    /**
      * Get formatted price.
      */
     public function getFormattedPriceAttribute(): string
@@ -90,6 +167,16 @@ class BoardingHouse extends Model
     {
         return $this->price_monthly
             ? 'Rp ' . number_format($this->price_monthly, 0, ',', '.')
+            : '-';
+    }
+
+    /**
+     * Get formatted 3 months price.
+     */
+    public function getFormattedPrice3monthsAttribute(): string
+    {
+        return $this->price_3months
+            ? 'Rp ' . number_format($this->price_3months, 0, ',', '.')
             : '-';
     }
 

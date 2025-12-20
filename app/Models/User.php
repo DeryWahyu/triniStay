@@ -25,6 +25,9 @@ class User extends Authenticatable
         'phone_number',
         'age',
         'gender',
+        'bank_name',
+        'bank_account_number',
+        'bank_account_name',
     ];
 
     /**

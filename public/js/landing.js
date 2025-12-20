@@ -238,20 +238,6 @@ function initScrollAnimation() {
         observer.observe(section);
     });
 }
-
-// ===========================
-// Detail Button Click Handler
-// ===========================
-function initDetailButtons() {
-    document.querySelectorAll('.btn-detail').forEach(button => {
-        button.addEventListener('click', function() {
-            const propertyName = this.closest('.property-card')
-                .querySelector('.property-name').textContent;
-            alert(`Fitur detail untuk "${propertyName}" akan segera tersedia!`);
-        });
-    });
-}
-
 // ===========================
 // Newsletter Form Handler
 // ===========================

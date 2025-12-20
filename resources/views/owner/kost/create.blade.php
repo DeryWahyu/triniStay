@@ -68,13 +68,13 @@
                                 <span class="text-sm font-medium text-gray-700">Putri</span>
                             </div>
                         </label>
-                        <label class="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 hover:bg-purple-50 transition-colors {{ old('type', 'campur') == 'campur' ? 'border-purple-500 bg-purple-50' : '' }}">
+                        <label class="flex items-center p-4 border border-gray-200 rounded-lg cursor-pointer hover:border-purple-500 hover:bg-purple-50 transition-colors {{ old('type') == 'campur' ? 'border-purple-500 bg-purple-50' : '' }}">
                             <input
                                 type="radio"
                                 name="type"
                                 value="campur"
                                 class="w-4 h-4 text-purple-600 border-gray-300 focus:ring-purple-500"
-                                {{ old('type', 'campur') == 'campur' ? 'checked' : '' }}
+                                {{ old('type') == 'campur' ? 'checked' : '' }}
                             >
                             <div class="ml-3">
                                 <span class="text-sm font-medium text-gray-700">Campur</span>
@@ -97,7 +97,7 @@
                 Harga Sewa
             </h3>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
                 <!-- Price Monthly -->
                 <div>
                     <label for="price_monthly" class="block text-sm font-medium text-gray-700 mb-2">
@@ -118,6 +118,25 @@
                     @error('price_monthly')
                         <p class="mt-1 text-sm text-red-500">{{ $message }}</p>
                     @enderror
+                </div>
+
+                <!-- Price 3 Months -->
+                <div>
+                    <label for="price_3months" class="block text-sm font-medium text-gray-700 mb-2">
+                        Harga per 3 Bulan
+                    </label>
+                    <div class="relative">
+                        <span class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500">Rp</span>
+                        <input
+                            type="number"
+                            name="price_3months"
+                            id="price_3months"
+                            value="{{ old('price_3months') }}"
+                            placeholder="1400000"
+                            class="w-full pl-12 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+                        >
+                    </div>
+                    <p class="mt-1 text-xs text-gray-500">Kosongkan jika tidak tersedia</p>
                 </div>
 
                 <!-- Price 6 Months -->
