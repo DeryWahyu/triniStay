@@ -28,6 +28,8 @@ class User extends Authenticatable
         'bank_name',
         'bank_account_number',
         'bank_account_name',
+        'is_blocked',
+        'last_seen_at',
     ];
 
     /**
@@ -50,6 +52,8 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_blocked' => 'boolean',
+            'last_seen_at' => 'datetime',
         ];
     }
 
@@ -104,5 +108,32 @@ class User extends Authenticatable
             $initials .= strtoupper(substr($word, 0, 1));
         }
         return $initials;
+    }
+
+    /**
+     * Check if user is currently online (active within last 5 minutes).
+     */
+    public function isOnline(): bool
+    {
+        if (!$this->last_seen_at) {
+            return false;
+        }
+        return $this->last_seen_at->diffInMinutes(now()) < 5;
+    }
+
+    /**
+     * Get the activity logs for this user.
+     */
+    public function activityLogs()
+    {
+        return $this->hasMany(ActivityLog::class);
+    }
+
+    /**
+     * Get the boarding houses owned by this user.
+     */
+    public function boardingHouses()
+    {
+        return $this->hasMany(BoardingHouse::class, 'owner_id');
     }
 }

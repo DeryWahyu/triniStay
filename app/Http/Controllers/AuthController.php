@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\LogActivity;
 use App\Models\BoardingHouse;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -139,6 +140,18 @@ class AuthController extends Controller
 
             $user = Auth::user();
 
+            // Check if user is blocked
+            if ($user->is_blocked) {
+                Auth::logout();
+                $request->session()->invalidate();
+                return back()->withErrors([
+                    'email' => 'Akun Anda telah diblokir. Silakan hubungi administrator.',
+                ])->onlyInput('email');
+            }
+
+            // Log login activity
+            LogActivity::login();
+
             // Redirect based on role
             if ($user->role === 'owner') {
                 // Check if owner has any boarding house
@@ -151,7 +164,7 @@ class AuthController extends Controller
             }
 
             return match($user->role) {
-                'superadmin' => redirect()->route('dashboard.admin'),
+                'superadmin' => redirect()->route('superadmin.dashboard'),
                 'renter' => redirect()->route('renter.dashboard'),
                 default => redirect()->route('home'),
             };
@@ -167,6 +180,9 @@ class AuthController extends Controller
      */
     public function logout(Request $request)
     {
+        // Log logout activity before logging out
+        LogActivity::logout();
+
         Auth::logout();
 
         $request->session()->invalidate();

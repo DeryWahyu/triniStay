@@ -13,6 +13,12 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'role' => \App\Http\Middleware\RoleMiddleware::class,
+            'check.blocked' => \App\Http\Middleware\CheckBlocked::class,
+        ]);
+
+        // Track online users for all authenticated requests
+        $middleware->web(append: [
+            \App\Http\Middleware\TrackOnlineUser::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

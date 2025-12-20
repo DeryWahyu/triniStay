@@ -26,7 +26,7 @@ class RoleMiddleware
         if (!in_array($user->role, $roles)) {
             // Redirect to appropriate dashboard based on role
             return match($user->role) {
-                'superadmin' => redirect()->route('dashboard.admin'),
+                'superadmin' => redirect()->route('superadmin.dashboard'),
                 'owner' => redirect()->route('owner.dashboard'),
                 'renter' => redirect()->route('renter.dashboard'),
                 default => redirect()->route('home'),

@@ -8,6 +8,7 @@ use App\Http\Controllers\Renter\RenterDashboardController;
 use App\Http\Controllers\Renter\ReviewController;
 use App\Http\Controllers\Renter\RoomMatchController;
 use App\Http\Controllers\Renter\SearchController;
+use App\Http\Controllers\SuperAdmin\SuperAdminController;
 use App\Models\BoardingHouse;
 use App\Models\Review;
 use Illuminate\Support\Facades\Route;
@@ -55,10 +56,13 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
     // SuperAdmin Dashboard (only superadmin)
-    Route::middleware('role:superadmin')->group(function () {
-        Route::get('/dashboard/admin', function () {
-            return view('dashboard.admin');
-        })->name('dashboard.admin');
+    Route::middleware('role:superadmin')->prefix('dashboard/superadmin')->name('superadmin.')->group(function () {
+        Route::get('/', [SuperAdminController::class, 'dashboard'])->name('dashboard');
+        Route::get('/users', [SuperAdminController::class, 'users'])->name('users.index');
+        Route::delete('/users/{user}', [SuperAdminController::class, 'destroyUser'])->name('users.destroy');
+        Route::post('/users/{user}/toggle-block', [SuperAdminController::class, 'toggleBlockUser'])->name('users.toggle-block');
+        Route::get('/kost', [SuperAdminController::class, 'boardingHouses'])->name('kost.index');
+        Route::get('/activity', [SuperAdminController::class, 'activityLogs'])->name('activity.index');
     });
 
     // Owner Routes (only owner)
