@@ -7,14 +7,15 @@
     <title>Detail Pesanan - TriniStay</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        'poppins': ['Poppins', 'sans-serif'],
+                        'inter': ['Inter', 'sans-serif'],
                     },
                     colors: {
                         'navy': '#1F2937',
@@ -25,7 +26,7 @@
         }
     </script>
     <style>
-        body { font-family: 'Poppins', sans-serif; }
+        body { font-family: 'Inter', sans-serif; }
         [x-cloak] { display: none !important; }
     </style>
 </head>
@@ -53,7 +54,7 @@
 
                 <!-- User Profile -->
                 <div class="flex items-center space-x-4">
-                    <div class="w-10 h-10 bg-gradient-to-br from-[#19608E] to-[#162D40] rounded-full flex items-center justify-center shadow-md">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-md ring-2 ring-blue-200">
                         <span class="text-white font-semibold text-sm">{{ Auth::user()->initials }}</span>
                     </div>
                     <span class="hidden sm:block text-navy font-medium">{{ Auth::user()->name }}</span>

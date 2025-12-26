@@ -33,12 +33,12 @@ class SuperAdminController extends Controller
         for ($i = 5; $i >= 0; $i--) {
             $date = Carbon::now()->subMonths($i);
             $monthName = $date->translatedFormat('M');
-            
+
             // Count bookings per month as "visitors/activity"
             $bookingCount = Booking::whereYear('created_at', $date->year)
                 ->whereMonth('created_at', $date->month)
                 ->count();
-            
+
             // Count new users per month
             $userCount = User::whereYear('created_at', $date->year)
                 ->whereMonth('created_at', $date->month)

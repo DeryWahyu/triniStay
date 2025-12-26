@@ -25,6 +25,7 @@ class User extends Authenticatable
         'phone_number',
         'age',
         'gender',
+        'date_of_birth',
         'bank_name',
         'bank_account_number',
         'bank_account_name',
@@ -54,6 +55,7 @@ class User extends Authenticatable
             'password' => 'hashed',
             'is_blocked' => 'boolean',
             'last_seen_at' => 'datetime',
+            'date_of_birth' => 'date',
         ];
     }
 
@@ -135,5 +137,24 @@ class User extends Authenticatable
     public function boardingHouses()
     {
         return $this->hasMany(BoardingHouse::class, 'owner_id');
+    }
+
+    /**
+     * Get the bookings for this user (renter).
+     */
+    public function bookings()
+    {
+        return $this->hasMany(Booking::class, 'user_id');
+    }
+
+    /**
+     * Get age from date of birth.
+     */
+    public function getAgeAttribute()
+    {
+        if ($this->date_of_birth) {
+            return $this->date_of_birth->diffInYears(now());
+        }
+        return $this->attributes['age'] ?? null;
     }
 }

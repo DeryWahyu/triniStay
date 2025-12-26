@@ -18,7 +18,7 @@ class TrackOnlineUser
     {
         if (Auth::check()) {
             $user = Auth::user();
-            
+
             // Update last_seen_at every request (throttle to prevent excessive DB writes)
             // Only update if last_seen_at is null or older than 1 minute
             if (!$user->last_seen_at || $user->last_seen_at->diffInMinutes(now()) >= 1) {

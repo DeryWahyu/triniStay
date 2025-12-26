@@ -121,6 +121,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/pemesanan/{booking}', [OrderController::class, 'show'])->name('orders.show');
         Route::get('/pemesanan/{booking}/download-receipt', [OrderController::class, 'downloadReceipt'])->name('orders.download-receipt');
 
+        // Profile
+        Route::get('/profil', [\App\Http\Controllers\Renter\ProfileController::class, 'index'])->name('profile.index');
+        Route::put('/profil', [\App\Http\Controllers\Renter\ProfileController::class, 'update'])->name('profile.update');
+        Route::put('/profil/password', [\App\Http\Controllers\Renter\ProfileController::class, 'updatePassword'])->name('profile.password');
+
         // Reviews
         Route::post('/review', [ReviewController::class, 'store'])->name('review.store');
 

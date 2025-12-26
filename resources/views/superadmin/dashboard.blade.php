@@ -170,7 +170,7 @@
         // Rating Doughnut Chart
         const ratingCtx = document.getElementById('ratingChart').getContext('2d');
         const ratingValue = {{ $averageRating }};
-        
+
         new Chart(ratingCtx, {
             type: 'doughnut',
             data: {
@@ -194,7 +194,7 @@
         // Monthly Activity Bar Chart
         const activityCtx = document.getElementById('activityChart').getContext('2d');
         const monthlyData = @json($monthlyData);
-        
+
         new Chart(activityCtx, {
             type: 'bar',
             data: {

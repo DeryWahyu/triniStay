@@ -65,7 +65,7 @@
                         <!-- Dropdown Menu -->
                         <div x-show="open" @click.away="open = false" x-cloak
                              class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg py-2 z-50 border border-gray-100">
-                            <a href="#" class="block px-4 py-2 text-gray-700 hover:bg-gray-50">Profil Saya</a>
+                            <a href="{{ route('renter.profile.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-50">Profil Saya</a>
                             <a href="{{ route('renter.orders.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-50">Pemesanan</a>
                             <hr class="my-2">
                             <form action="{{ route('logout') }}" method="POST">
@@ -499,27 +499,85 @@
         <!-- Related Kosts -->
         @if($relatedKosts->count() > 0)
             <div class="mt-12">
-                <h2 class="text-2xl font-bold text-gray-900 mb-6">Kos {{ $kost->type_label }} Lainnya</h2>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 text-center">Kos {{ $kost->type_label }} Lainnya</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     @foreach($relatedKosts as $related)
-                        <a href="{{ route('renter.kost.show', $related->slug) }}" class="group">
-                            <div class="bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1">
-                                <div class="aspect-video relative overflow-hidden">
-                                    <img src="{{ $related->first_image }}" alt="{{ $related->name }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                                    <span class="absolute top-3 left-3 px-3 py-1 rounded-full text-xs font-semibold {{ $related->type_badge_color }}">
+                        <div class="bg-white rounded-2xl overflow-hidden shadow-md transition-all duration-300 hover:shadow-xl">
+                            <!-- Image Header with Hover Effect -->
+                            <div class="relative aspect-[4/3] overflow-hidden group">
+                                <img src="{{ $related->first_image }}" alt="{{ $related->name }}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105">
+
+                                <!-- Dark Overlay on Hover -->
+                                <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center">
+                                    <a href="{{ route('renter.kost.show', $related->slug) }}"
+                                       class="px-5 py-2.5 bg-white rounded-full flex items-center gap-2 text-gray-800 font-medium transform scale-90 opacity-0 group-hover:scale-100 group-hover:opacity-100 transition-all duration-300 hover:bg-blue-600 hover:text-white">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/>
+                                        </svg>
+                                        Lihat Detail
+                                    </a>
+                                </div>
+
+                                <!-- Badge Left - Gender Type -->
+                                <div class="absolute top-4 left-4">
+                                    <span class="px-3 py-1.5 {{ $related->type === 'putra' ? 'bg-blue-500' : ($related->type === 'putri' ? 'bg-pink-500' : 'bg-purple-500') }} text-white text-xs font-semibold rounded-full uppercase tracking-wide">
                                         {{ $related->type_label }}
                                     </span>
                                 </div>
-                                <div class="bg-navy p-4">
-                                    <h3 class="font-semibold text-white mb-1 truncate">{{ $related->name }}</h3>
-                                    <p class="text-gray-400 text-sm mb-2 truncate">{{ $related->address }}</p>
-                                    <div class="flex items-center justify-between">
-                                        <p class="text-white font-bold">{{ $related->formatted_price_monthly }}<span class="text-gray-400 font-normal text-sm">/bulan</span></p>
-                                        <span class="px-3 py-1 bg-white text-navy text-sm font-medium rounded-md">Detail</span>
+
+                                <!-- Room Match Icon Right (if room sharing enabled) -->
+                                @if($related->is_room_match_enabled)
+                                    <div class="absolute top-4 right-4">
+                                        <span class="w-9 h-9 bg-green-500 rounded-full flex items-center justify-center shadow-lg" title="Bisa Berbagi Kamar">
+                                            <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                                <circle cx="9" cy="7" r="4"></circle>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                                            </svg>
+                                        </span>
                                     </div>
+                                @endif
+                            </div>
+
+                            <!-- Content Body -->
+                            <div class="p-5">
+                                <!-- Location -->
+                                <div class="flex items-center gap-1.5 text-gray-500 text-sm mb-2">
+                                    <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+                                    </svg>
+                                    <span class="truncate">{{ $related->address }}</span>
+                                </div>
+
+                                <!-- Title -->
+                                <h3 class="font-bold text-gray-900 text-lg mb-3 line-clamp-2">{{ $related->name }}</h3>
+
+                                <!-- Tags Row -->
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    @if($related->room_size ?? null)
+                                        <span class="px-2.5 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded-full">{{ $related->room_size }}</span>
+                                    @endif
+                                    @if($related->total_rooms ?? null)
+                                        <span class="px-2.5 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded-full">{{ $related->total_rooms }} Kamar</span>
+                                    @endif
+                                    @if($related->available_rooms ?? null)
+                                        <span class="px-2.5 py-1 bg-green-50 text-green-600 text-xs font-medium rounded-full">{{ $related->available_rooms }} Tersedia</span>
+                                    @endif
+                                </div>
+
+                                <!-- Footer -->
+                                <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+                                    <p class="text-blue-600 font-bold text-lg">{{ $related->formatted_price_monthly }}<span class="text-gray-400 font-normal text-sm">/bln</span></p>
+                                    <a href="{{ route('renter.kost.show', $related->slug) }}"
+                                       class="px-4 py-2 bg-blue-600 text-white text-sm font-medium rounded-full hover:bg-blue-700 transition-colors">
+                                        Pesan Sekarang
+                                    </a>
                                 </div>
                             </div>
-                        </a>
+                        </div>
                     @endforeach
                 </div>
             </div>
@@ -548,23 +606,44 @@
         [x-cloak] { display: none !important; }
     </style>
 
+    <!-- Kost Data (JSON) -->
+    <script id="kost-data" type="application/json">
+        {!! json_encode([
+            'prices' => [
+                'single' => [
+                    '1_month' => $kost->price_monthly ?? $kost->price ?? 0,
+                    '3_months' => $kost->price_3months ?? (($kost->price_monthly ?? 0) * 3),
+                    '6_months' => $kost->price_6months ?? (($kost->price_monthly ?? 0) * 6),
+                    '1_year' => $kost->price_yearly ?? (($kost->price_monthly ?? 0) * 12)
+                ]
+            ],
+            'roomMatchPrice' => $kost->room_match_price ? intval($kost->room_match_price / 2) : 0,
+            'roomMatchTotalPrice' => $kost->room_match_price ?? 0,
+            'roomMatchPeriodRaw' => $kost->room_match_period ?? '1_month',
+            'hasRoomMatch' => $kost->is_room_match_enabled && $kost->room_match_price ? true : false,
+            'bookingUrl' => route('renter.booking.create', $kost->slug),
+            'map' => [
+                'latitude' => $kost->latitude,
+                'longitude' => $kost->longitude,
+                'name' => $kost->name,
+                'address' => $kost->address
+            ]
+        ]) !!}
+    </script>
+
     <script>
         function pricingSelector() {
+            const kostData = JSON.parse(document.getElementById('kost-data').textContent);
+            
             return {
                 duration: '1_month',
-                occupantType: 'single', // 'single' or 'double'
-                prices: {
-                    single: {
-                        '1_month': {{ $kost->price_monthly ?? $kost->price ?? 0 }},
-                        '3_months': {{ $kost->price_3months ?? (($kost->price_monthly ?? 0) * 3) }},
-                        '6_months': {{ $kost->price_6months ?? (($kost->price_monthly ?? 0) * 6) }},
-                        '1_year': {{ $kost->price_yearly ?? (($kost->price_monthly ?? 0) * 12) }}
-                    }
-                },
-                roomMatchPrice: {{ $kost->room_match_price ? intval($kost->room_match_price / 2) : 0 }},
-                roomMatchTotalPrice: {{ $kost->room_match_price ?? 0 }},
-                roomMatchPeriodRaw: '{{ $kost->room_match_period ?? "1_month" }}',
-                hasRoomMatch: {{ $kost->is_room_match_enabled && $kost->room_match_price ? 'true' : 'false' }},
+                occupantType: 'single',
+                prices: kostData.prices,
+                roomMatchPrice: kostData.roomMatchPrice,
+                roomMatchTotalPrice: kostData.roomMatchTotalPrice,
+                roomMatchPeriodRaw: kostData.roomMatchPeriodRaw,
+                hasRoomMatch: kostData.hasRoomMatch,
+                bookingBaseUrl: kostData.bookingUrl,
                 normalizePeriod(period) {
                     const periodMap = {
                         '1 bulan': '1_month',
@@ -588,7 +667,6 @@
                     return this.prices.single[this.duration] || this.prices.single['1_month'];
                 },
                 get selectedDuration() {
-                    // For double occupant, use the room match period set by owner
                     if (this.occupantType === 'double') {
                         return this.roomMatchPeriod;
                     }
@@ -610,25 +688,30 @@
                     return 'Rp ' + new Intl.NumberFormat('id-ID').format(price);
                 },
                 getBookingUrl() {
-                    return '{{ route('renter.booking.create', $kost->slug) }}?duration=' + this.selectedDuration + '&occupant=' + this.occupantType + '&price=' + this.selectedPrice;
+                    return this.bookingBaseUrl + '?duration=' + this.selectedDuration + '&occupant=' + this.occupantType + '&price=' + this.selectedPrice;
                 }
             }
         }
-    </script>
 
-    @if($kost->latitude && $kost->longitude)
-    <script>
+        // Initialize Map
         document.addEventListener('DOMContentLoaded', function() {
-            const map = L.map('map').setView([{{ $kost->latitude }}, {{ $kost->longitude }}], 15);
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap'
-            }).addTo(map);
-            L.marker([{{ $kost->latitude }}, {{ $kost->longitude }}])
-                .addTo(map)
-                .bindPopup('<strong>{{ addslashes($kost->name) }}</strong><br>{{ addslashes($kost->address) }}')
-                .openPopup();
+            const kostData = JSON.parse(document.getElementById('kost-data').textContent);
+            
+            if (kostData.map.latitude && kostData.map.longitude) {
+                const mapElement = document.getElementById('map');
+                if (mapElement) {
+                    const map = L.map('map').setView([kostData.map.latitude, kostData.map.longitude], 15);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '© OpenStreetMap'
+                    }).addTo(map);
+                    L.marker([kostData.map.latitude, kostData.map.longitude])
+                        .addTo(map)
+                        .bindPopup('<strong>' + kostData.map.name + '</strong><br>' + kostData.map.address)
+                        .openPopup();
+                }
+            }
         });
     </script>
-    @endif
 </body>
 </html>
+
