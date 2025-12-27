@@ -145,6 +145,11 @@ class SuperAdminController extends Controller
     {
         $query = BoardingHouse::with(['owner', 'rooms']);
 
+        // Filter by type
+        if ($request->filled('type')) {
+            $query->where('type', $request->type);
+        }
+
         // Search
         if ($request->filled('search')) {
             $search = $request->search;
@@ -159,6 +164,31 @@ class SuperAdminController extends Controller
         $boardingHouses = $query->orderBy('created_at', 'desc')->paginate(15);
 
         return view('superadmin.kost.index', compact('boardingHouses'));
+    }
+
+    /**
+     * Show boarding house detail.
+     */
+    public function showBoardingHouse(BoardingHouse $boardingHouse)
+    {
+        $boardingHouse->load(['owner', 'rooms', 'reviews.user']);
+        
+        return view('superadmin.kost.show', compact('boardingHouse'));
+    }
+
+    /**
+     * Delete a boarding house.
+     */
+    public function destroyBoardingHouse(BoardingHouse $boardingHouse)
+    {
+        $kostName = $boardingHouse->name;
+        $ownerName = $boardingHouse->owner->name ?? 'Unknown';
+        
+        $boardingHouse->delete();
+
+        LogActivity::record('DELETE', "Menghapus kos {$kostName} milik {$ownerName}");
+
+        return redirect()->route('superadmin.kost.index')->with('success', "Kos {$kostName} berhasil dihapus.");
     }
 
     /**
@@ -195,5 +225,61 @@ class SuperAdminController extends Controller
         $actions = ActivityLog::distinct()->pluck('action');
 
         return view('superadmin.activity.index', compact('activities', 'actions'));
+    }
+
+    /**
+     * Display all reviews.
+     */
+    public function reviews(Request $request)
+    {
+        $query = Review::with(['user', 'boardingHouse']);
+
+        // Filter by rating
+        if ($request->filled('rating')) {
+            $query->where('rating', $request->rating);
+        }
+
+        // Filter by published status
+        if ($request->filled('status')) {
+            $query->where('is_published', $request->status === 'published');
+        }
+
+        // Search
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('comment', 'like', "%{$search}%")
+                  ->orWhereHas('user', function ($q) use ($search) {
+                      $q->where('name', 'like', "%{$search}%");
+                  })
+                  ->orWhereHas('boardingHouse', function ($q) use ($search) {
+                      $q->where('name', 'like', "%{$search}%");
+                  });
+            });
+        }
+
+        $reviews = $query->orderBy('created_at', 'desc')->paginate(15);
+
+        // Stats
+        $totalReviews = Review::count();
+        $averageRating = Review::avg('rating') ?? 0;
+        $publishedCount = Review::where('is_published', true)->count();
+
+        return view('superadmin.reviews.index', compact('reviews', 'totalReviews', 'averageRating', 'publishedCount'));
+    }
+
+    /**
+     * Delete a review.
+     */
+    public function destroyReview(Review $review)
+    {
+        $reviewerName = $review->user->name ?? 'Unknown';
+        $boardingHouseName = $review->boardingHouse->name ?? 'Unknown';
+        
+        $review->delete();
+
+        LogActivity::record('DELETE', "Menghapus ulasan dari {$reviewerName} untuk kos {$boardingHouseName}");
+
+        return back()->with('success', "Ulasan berhasil dihapus.");
     }
 }

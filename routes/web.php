@@ -62,6 +62,10 @@ Route::middleware('auth')->group(function () {
         Route::delete('/users/{user}', [SuperAdminController::class, 'destroyUser'])->name('users.destroy');
         Route::post('/users/{user}/toggle-block', [SuperAdminController::class, 'toggleBlockUser'])->name('users.toggle-block');
         Route::get('/kost', [SuperAdminController::class, 'boardingHouses'])->name('kost.index');
+        Route::get('/kost/{boardingHouse}', [SuperAdminController::class, 'showBoardingHouse'])->name('kost.show');
+        Route::delete('/kost/{boardingHouse}', [SuperAdminController::class, 'destroyBoardingHouse'])->name('kost.destroy');
+        Route::get('/reviews', [SuperAdminController::class, 'reviews'])->name('reviews.index');
+        Route::delete('/reviews/{review}', [SuperAdminController::class, 'destroyReview'])->name('reviews.destroy');
         Route::get('/activity', [SuperAdminController::class, 'activityLogs'])->name('activity.index');
     });
 
