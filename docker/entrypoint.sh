@@ -45,7 +45,7 @@ php artisan event:cache
 
 # Publish vendor assets
 echo "Publishing vendor assets..."
-php artisan sweetalert:publish
+
 
 # Set proper permissions
 echo "Setting permissions..."
