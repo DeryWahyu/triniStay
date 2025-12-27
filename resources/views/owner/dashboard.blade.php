@@ -175,101 +175,78 @@
 
         <!-- Right Column -->
         <div class="space-y-6">
-            <!-- Ringkasan Pemesanan -->
+            <!-- Status Pemesanan -->
             <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">Ringkasan Pemesanan</h3>
-
-                <!-- Simple Chart Placeholder -->
-                <div class="relative h-40">
-                    <svg viewBox="0 0 300 120" class="w-full h-full">
-                        <!-- Grid lines -->
-                        <line x1="40" y1="20" x2="280" y2="20" stroke="#E5E7EB" stroke-width="1"/>
-                        <line x1="40" y1="50" x2="280" y2="50" stroke="#E5E7EB" stroke-width="1"/>
-                        <line x1="40" y1="80" x2="280" y2="80" stroke="#E5E7EB" stroke-width="1"/>
-                        <line x1="40" y1="110" x2="280" y2="110" stroke="#E5E7EB" stroke-width="1"/>
-
-                        <!-- Line chart -->
-                        <polyline
-                            points="40,90 80,70 120,80 160,50 200,60 240,30 280,45"
-                            fill="none"
-                            stroke="#3B82F6"
-                            stroke-width="3"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-
-                        <!-- Area under the line -->
-                        <polygon
-                            points="40,90 80,70 120,80 160,50 200,60 240,30 280,45 280,110 40,110"
-                            fill="url(#gradient)"
-                            opacity="0.3"
-                        />
-
-                        <!-- Gradient definition -->
-                        <defs>
-                            <linearGradient id="gradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                                <stop offset="0%" style="stop-color:#3B82F6;stop-opacity:0.5" />
-                                <stop offset="100%" style="stop-color:#3B82F6;stop-opacity:0" />
-                            </linearGradient>
-                        </defs>
-
-                        <!-- Data points -->
-                        <circle cx="40" cy="90" r="4" fill="#3B82F6"/>
-                        <circle cx="80" cy="70" r="4" fill="#3B82F6"/>
-                        <circle cx="120" cy="80" r="4" fill="#3B82F6"/>
-                        <circle cx="160" cy="50" r="4" fill="#3B82F6"/>
-                        <circle cx="200" cy="60" r="4" fill="#3B82F6"/>
-                        <circle cx="240" cy="30" r="4" fill="#3B82F6"/>
-                        <circle cx="280" cy="45" r="4" fill="#3B82F6"/>
-                    </svg>
-                </div>
-
-                <div class="flex justify-between text-xs text-gray-500 mt-2">
-                    <span>Sen</span>
-                    <span>Sel</span>
-                    <span>Rab</span>
-                    <span>Kam</span>
-                    <span>Jum</span>
-                    <span>Sab</span>
-                    <span>Min</span>
-                </div>
-            </div>
-
-            <!-- Pengguna Online -->
-            <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-                <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-lg font-semibold text-gray-900">Pengguna Online</h3>
-                    <span class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
-                </div>
+                <h3 class="text-lg font-semibold text-gray-900 mb-4">Status Pemesanan</h3>
 
                 <div class="space-y-4">
-                    @php
-                        $onlineUsers = [
-                            ['name' => 'Ahmad Rizki', 'time' => '2 menit lalu'],
-                            ['name' => 'Siti Nurhaliza', 'time' => '5 menit lalu'],
-                            ['name' => 'Budi Santoso', 'time' => '10 menit lalu'],
-                            ['name' => 'Dewi Lestari', 'time' => '15 menit lalu'],
-                        ];
-                    @endphp
-
-                    @foreach($onlineUsers as $user)
+                    <!-- Menunggu Konfirmasi -->
+                    <div class="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
                         <div class="flex items-center space-x-3">
-                            <div class="relative">
-                                <div class="w-10 h-10 bg-gradient-to-br from-blue-400 to-blue-600 rounded-full flex items-center justify-center">
-                                    <span class="text-white text-sm font-medium">{{ strtoupper(substr($user['name'], 0, 1)) }}</span>
-                                </div>
-                                <span class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-white rounded-full"></span>
+                            <div class="w-10 h-10 bg-yellow-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
                             </div>
-                            <div class="flex-1 min-w-0">
-                                <p class="text-sm font-medium text-gray-900 truncate">{{ $user['name'] }}</p>
-                                <p class="text-xs text-gray-500">{{ $user['time'] }}</p>
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">Menunggu Konfirmasi</p>
+                                <p class="text-xs text-gray-500">Perlu ditindaklanjuti</p>
                             </div>
                         </div>
-                    @endforeach
+                        <span class="text-2xl font-bold text-yellow-600">{{ $pendingOrders ?? 0 }}</span>
+                    </div>
+
+                    <!-- Dikonfirmasi -->
+                    <div class="flex items-center justify-between p-3 bg-blue-50 rounded-lg">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-blue-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">Dikonfirmasi</p>
+                                <p class="text-xs text-gray-500">Sedang berjalan</p>
+                            </div>
+                        </div>
+                        <span class="text-2xl font-bold text-blue-600">{{ $confirmedOrders ?? 0 }}</span>
+                    </div>
+
+                    <!-- Selesai -->
+                    <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-green-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">Selesai</p>
+                                <p class="text-xs text-gray-500">Bulan ini</p>
+                            </div>
+                        </div>
+                        <span class="text-2xl font-bold text-green-600">{{ $completedOrders ?? 0 }}</span>
+                    </div>
+
+                    <!-- Dibatalkan -->
+                    <div class="flex items-center justify-between p-3 bg-red-50 rounded-lg">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-10 h-10 bg-red-100 rounded-lg flex items-center justify-center">
+                                <svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                                </svg>
+                            </div>
+                            <div>
+                                <p class="text-sm font-medium text-gray-900">Dibatalkan</p>
+                                <p class="text-xs text-gray-500">Bulan ini</p>
+                            </div>
+                        </div>
+                        <span class="text-2xl font-bold text-red-600">{{ $cancelledOrders ?? 0 }}</span>
+                    </div>
                 </div>
 
-                <a href="#" class="mt-4 block text-center text-sm text-blue-600 hover:text-blue-800 font-medium">
-                    Lihat Semua →
+                <a href="{{ route('owner.bookings.index') }}" class="mt-4 block text-center text-sm text-blue-600 hover:text-blue-800 font-medium">
+                    Lihat Semua Pemesanan →
                 </a>
             </div>
         </div>
@@ -335,32 +312,36 @@
 </div>
 @endsection
 
+@php
+$kosMapData = isset($boardingHouses) ? $boardingHouses->map(function($kos) {
+    return [
+        'id' => $kos->id,
+        'name' => $kos->name,
+        'type' => $kos->type ?? 'campur',
+        'type_label' => $kos->type_label ?? 'Campur',
+        'price' => $kos->formatted_price,
+        'address' => $kos->address,
+        'lat' => $kos->latitude,
+        'lng' => $kos->longitude,
+        'image' => $kos->first_image,
+        'available_rooms' => $kos->available_rooms_count,
+        'total_rooms' => $kos->total_rooms,
+        'room_match' => $kos->is_room_match_enabled ?? false,
+        'edit_url' => route('owner.kost.edit', $kos->id),
+    ];
+})->values()->toArray() : [];
+@endphp
+
 @push('scripts')
+<script id="kos-map-data" type="application/json">{!! json_encode($kosMapData) !!}</script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const mapElement = document.getElementById('dashboard-map');
+    var mapElement = document.getElementById('dashboard-map');
     if (!mapElement) return;
 
-    // Kos data from database
-    const kosData = [
-        @foreach($boardingHouses as $kos)
-        {
-            id: {{ $kos->id }},
-            name: "{{ addslashes($kos->name) }}",
-            type: "{{ $kos->type ?? 'campur' }}",
-            type_label: "{{ $kos->type_label }}",
-            price: "{{ $kos->formatted_price }}",
-            address: "{{ addslashes($kos->address) }}",
-            lat: {{ $kos->latitude ?? 'null' }},
-            lng: {{ $kos->longitude ?? 'null' }},
-            image: "{{ $kos->first_image }}",
-            available_rooms: {{ $kos->available_rooms_count }},
-            total_rooms: {{ $kos->total_rooms }},
-            room_match: {{ $kos->is_room_match_enabled ? 'true' : 'false' }},
-            edit_url: "{{ route('owner.kost.edit', $kos->id) }}"
-        },
-        @endforeach
-    ];
+    // Kos data from JSON script tag
+    var kosDataScript = document.getElementById('kos-map-data');
+    var kosData = JSON.parse(kosDataScript.textContent);
 
     // Filter kos with valid coordinates
     const validKos = kosData.filter(k => k.lat && k.lng);
@@ -381,21 +362,36 @@ document.addEventListener('DOMContentLoaded', function() {
     const icons = {
         putra: L.divIcon({
             className: 'custom-marker',
-            html: '<div style="background-color: #3B82F6; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">🧑</div>',
-            iconSize: [30, 30],
-            iconAnchor: [15, 15]
+            html: `<div style="position: relative; width: 40px; height: 50px;">
+                <div style="background: linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%); width: 40px; height: 40px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(59, 130, 246, 0.4);">
+                    <svg style="transform: rotate(45deg); width: 20px; height: 20px; fill: white;" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                </div>
+                <div style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 8px; height: 8px; background: #1D4ED8; border-radius: 50%;"></div>
+            </div>`,
+            iconSize: [40, 50],
+            iconAnchor: [20, 50]
         }),
         putri: L.divIcon({
             className: 'custom-marker',
-            html: '<div style="background-color: #EC4899; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">👩</div>',
-            iconSize: [30, 30],
-            iconAnchor: [15, 15]
+            html: `<div style="position: relative; width: 40px; height: 50px;">
+                <div style="background: linear-gradient(135deg, #EC4899 0%, #BE185D 100%); width: 40px; height: 40px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(236, 72, 153, 0.4);">
+                    <svg style="transform: rotate(45deg); width: 20px; height: 20px; fill: white;" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                </div>
+                <div style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 8px; height: 8px; background: #BE185D; border-radius: 50%;"></div>
+            </div>`,
+            iconSize: [40, 50],
+            iconAnchor: [20, 50]
         }),
         campur: L.divIcon({
             className: 'custom-marker',
-            html: '<div style="background-color: #8B5CF6; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">👥</div>',
-            iconSize: [30, 30],
-            iconAnchor: [15, 15]
+            html: `<div style="position: relative; width: 40px; height: 50px;">
+                <div style="background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%); width: 40px; height: 40px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg); display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);">
+                    <svg style="transform: rotate(45deg); width: 20px; height: 20px; fill: white;" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+                </div>
+                <div style="position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: 8px; height: 8px; background: #6D28D9; border-radius: 50%;"></div>
+            </div>`,
+            iconSize: [40, 50],
+            iconAnchor: [20, 50]
         })
     };
 
@@ -415,7 +411,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <p class="text-blue-600 font-bold mt-2">${kos.price}/bulan</p>
                     <p class="text-sm text-gray-500 mt-1">${kos.available_rooms}/${kos.total_rooms} kamar tersedia</p>
                     ${kos.room_match ? '<p class="text-xs text-green-600 mt-1">✓ Room Match tersedia</p>' : ''}
-                    <a href="${kos.edit_url}" class="mt-3 block text-center px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700">Edit Kos</a>
+                    <a href="${kos.edit_url}" class="mt-3 block text-center px-3 py-2 bg-blue-600 text-white text-sm rounded-lg hover:bg-blue-700" style="color: white !important; background-color: #2563eb; display: block; text-align: center; padding: 8px 12px; border-radius: 8px; text-decoration: none;">Edit Kos</a>
                 </div>
             </div>
         `;

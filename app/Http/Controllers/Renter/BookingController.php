@@ -234,10 +234,7 @@ class BookingController extends Controller
             $booking->update(['payment_proof' => $path]);
         }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Bukti pembayaran berhasil diunggah.',
-        ]);
+        return redirect()->back()->with('success', 'Bukti pembayaran berhasil diunggah.');
     }
 
     /**

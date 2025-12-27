@@ -126,7 +126,7 @@
                         </svg>
                     </div>
                     <div class="flex-1">
-                        <h3 class="text-lg font-semibold text-green-800">Pemesanan Berhasil Diajukan! 🎉</h3>
+                        <h3 class="text-lg font-semibold text-green-800">Pemesanan Berhasil Diajukan!</h3>
                         <p class="text-green-700 mt-1">Kode Pemesanan: <span class="font-bold bg-green-200 px-2 py-0.5 rounded">{{ request('booking_code') }}</span></p>
                         <p class="text-sm text-green-600 mt-2">
                             Pemilik kos akan mengkonfirmasi dalam waktu <strong>1x24 jam</strong>.
@@ -210,11 +210,11 @@
                     @foreach($myBookings as $booking)
                         @php
                             $statusConfig = [
-                                'pending' => ['bg' => 'bg-amber-100', 'text' => 'text-amber-700', 'icon' => '⏳', 'label' => 'Menunggu Konfirmasi'],
-                                'approved' => ['bg' => 'bg-green-100', 'text' => 'text-green-700', 'icon' => '✅', 'label' => 'Disetujui'],
-                                'rejected' => ['bg' => 'bg-red-100', 'text' => 'text-red-700', 'icon' => '❌', 'label' => 'Ditolak'],
-                                'cancelled' => ['bg' => 'bg-gray-100', 'text' => 'text-gray-700', 'icon' => '🚫', 'label' => 'Dibatalkan'],
-                                'completed' => ['bg' => 'bg-blue-100', 'text' => 'text-blue-700', 'icon' => '🎉', 'label' => 'Selesai'],
+                                'pending' => ['bg' => 'bg-amber-100', 'text' => 'text-amber-700', 'icon' => '', 'label' => 'Menunggu'],
+                                'approved' => ['bg' => 'bg-green-100', 'text' => 'text-green-700', 'icon' => '', 'label' => 'Disetujui'],
+                                'rejected' => ['bg' => 'bg-red-100', 'text' => 'text-red-700', 'icon' => '', 'label' => 'Ditolak'],
+                                'cancelled' => ['bg' => 'bg-gray-100', 'text' => 'text-gray-700', 'icon' => '', 'label' => 'Dibatalkan'],
+                                'completed' => ['bg' => 'bg-blue-100', 'text' => 'text-blue-700', 'icon' => '', 'label' => 'Selesai'],
                             ];
                             $status = $statusConfig[$booking->status] ?? $statusConfig['pending'];
                         @endphp
@@ -381,23 +381,23 @@
                                             <div class="flex flex-wrap items-center gap-2 mb-2">
                                                 @if($booking->shared_status === 'pending' && $isInvitedUser)
                                                     <span class="px-3 py-1 text-xs font-semibold rounded-full bg-yellow-100 text-yellow-700">
-                                                        ⏳ Menunggu Konfirmasi Anda
+                                                        Menunggu Konfirmasi Anda
                                                     </span>
                                                 @elseif($booking->shared_status === 'pending')
                                                     <span class="px-3 py-1 text-xs font-semibold rounded-full bg-orange-100 text-orange-700">
-                                                        📤 Menunggu Respon
+                                                        Menunggu Respon
                                                     </span>
                                                 @elseif($booking->shared_status === 'accepted')
                                                     <span class="px-3 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-700">
-                                                        ✅ Diterima
+                                                        Diterima
                                                     </span>
                                                 @elseif($booking->shared_status === 'rejected')
                                                     <span class="px-3 py-1 text-xs font-semibold rounded-full bg-red-100 text-red-700">
-                                                        ❌ Ditolak
+                                                        Ditolak
                                                     </span>
                                                 @endif
                                                 <span class="px-2 py-1 text-xs font-medium rounded-full bg-green-100 text-green-700">
-                                                    🤝 Room Match
+                                                    Room Match
                                                 </span>
                                             </div>
 

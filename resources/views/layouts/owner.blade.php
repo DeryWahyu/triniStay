@@ -136,17 +136,6 @@
                         </a>
                     </li>
 
-                    <!-- Riwayat Pemesanan -->
-                    <li>
-                        <a href="#"
-                           class="flex items-center px-4 py-3 rounded-lg transition-colors duration-200
-                                  {{ request()->routeIs('owner.history.*') ? 'bg-blue-600 text-white' : 'text-gray-300 hover:bg-gray-800 hover:text-white' }}">
-                            <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                            </svg>
-                            <span class="ml-3 whitespace-nowrap" x-show="sidebarOpen" x-transition>Riwayat Pemesanan</span>
-                        </a>
-                    </li>
 
                     <!-- Profil & Pengaturan -->
                     <li>
@@ -223,6 +212,15 @@
         </div>
     </div>
 
+
+    <!-- Flash Message Data -->
+    <script id="flash-messages" type="application/json">{!! json_encode([
+        'success' => session('success'),
+        'info' => session('info'),
+        'error' => session('error'),
+        'warning' => session('warning')
+    ]) !!}</script>
+
     <!-- SweetAlert2 Notifications -->
     <script>
         // Toast configuration
@@ -232,40 +230,29 @@
             showConfirmButton: false,
             timer: 3000,
             timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            didOpen: function(toast) {
+                toast.addEventListener('mouseenter', Swal.stopTimer);
+                toast.addEventListener('mouseleave', Swal.resumeTimer);
             }
         });
 
         // Flash message notifications
-        @if(session('success'))
-            Toast.fire({
-                icon: 'success',
-                title: '{{ session('success') }}'
-            });
-        @endif
-
-        @if(session('info'))
-            Toast.fire({
-                icon: 'info',
-                title: '{{ session('info') }}'
-            });
-        @endif
-
-        @if(session('error'))
-            Toast.fire({
-                icon: 'error',
-                title: '{{ session('error') }}'
-            });
-        @endif
-
-        @if(session('warning'))
-            Toast.fire({
-                icon: 'warning',
-                title: '{{ session('warning') }}'
-            });
-        @endif
+        (function() {
+            var flashData = JSON.parse(document.getElementById('flash-messages').textContent);
+            
+            if (flashData.success) {
+                Toast.fire({ icon: 'success', title: flashData.success });
+            }
+            if (flashData.info) {
+                Toast.fire({ icon: 'info', title: flashData.info });
+            }
+            if (flashData.error) {
+                Toast.fire({ icon: 'error', title: flashData.error });
+            }
+            if (flashData.warning) {
+                Toast.fire({ icon: 'warning', title: flashData.warning });
+            }
+        })();
 
         // Delete confirmation function
         function confirmDelete(formId, itemName = 'item ini') {

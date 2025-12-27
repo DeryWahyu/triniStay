@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Owner;
 
 use App\Http\Controllers\Controller;
 use App\Models\BoardingHouse;
+use App\Models\Booking;
 use App\Models\Room;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -34,13 +35,41 @@ class OwnerKostController extends Controller
         $availableRooms = $boardingHouses->sum('available_rooms');
         $roomMatchCount = $boardingHouses->where('is_room_match_enabled', true)->count();
 
+        // Get boarding house IDs for this owner
+        $boardingHouseIds = $boardingHouses->pluck('id');
+
+        // Order/Booking statistics
+        $pendingOrders = Booking::whereIn('boarding_house_id', $boardingHouseIds)
+            ->where('status', 'pending')
+            ->count();
+
+        $confirmedOrders = Booking::whereIn('boarding_house_id', $boardingHouseIds)
+            ->where('status', 'approved')
+            ->count();
+
+        $completedOrders = Booking::whereIn('boarding_house_id', $boardingHouseIds)
+            ->where('status', 'completed')
+            ->whereMonth('updated_at', now()->month)
+            ->whereYear('updated_at', now()->year)
+            ->count();
+
+        $cancelledOrders = Booking::whereIn('boarding_house_id', $boardingHouseIds)
+            ->whereIn('status', ['cancelled', 'rejected'])
+            ->whereMonth('updated_at', now()->month)
+            ->whereYear('updated_at', now()->year)
+            ->count();
+
         return view('owner.dashboard', compact(
             'boardingHouses',
             'latestKos',
             'totalKos',
             'totalRooms',
             'availableRooms',
-            'roomMatchCount'
+            'roomMatchCount',
+            'pendingOrders',
+            'confirmedOrders',
+            'completedOrders',
+            'cancelledOrders'
         ));
     }
 

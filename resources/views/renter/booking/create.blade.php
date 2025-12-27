@@ -158,21 +158,6 @@
                                         <p class="font-semibold text-navy">
                                             {{ $occupantType === 'double' ? '2 Orang (Room Match)' : '1 Orang' }}
                                         </p>
-                                        <p class="text-sm text-gray-600">
-                                            @php
-                                                $durationLabels = [
-                                                    '1_month' => '1 Bulan',
-                                                    '3_months' => '3 Bulan',
-                                                    '6_months' => '6 Bulan',
-                                                    '1_year' => '1 Tahun'
-                                                ];
-                                                // For room match, show the period set by owner
-                                                $displayDuration = $occupantType === 'double' && $boardingHouse->room_match_period
-                                                    ? $durationLabels[$boardingHouse->room_match_period] ?? '1 Bulan'
-                                                    : ($durationLabels[$duration] ?? '1 Bulan');
-                                            @endphp
-                                            Durasi: {{ $displayDuration }}
-                                        </p>
                                     </div>
                                 </div>
                                 <div class="text-right">
