@@ -31,12 +31,21 @@
                 </select>
             </div>
 
+            <!-- Status Filter -->
+            <div class="w-full md:w-48">
+                <select name="status" class="w-full px-4 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                    <option value="">Semua Status</option>
+                    <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Aktif</option>
+                    <option value="blocked" {{ request('status') === 'blocked' ? 'selected' : '' }}>Terblokir</option>
+                </select>
+            </div>
+
             <!-- Submit -->
             <button type="submit" class="px-6 py-3 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 transition-colors">
                 Filter
             </button>
 
-            @if(request()->hasAny(['search', 'role']))
+            @if(request()->hasAny(['search', 'role', 'status']))
                 <a href="{{ route('superadmin.users.index') }}" class="px-6 py-3 bg-gray-100 text-gray-700 font-medium rounded-xl hover:bg-gray-200 transition-colors text-center">
                     Reset
                 </a>
@@ -97,23 +106,22 @@
                             <td class="px-6 py-4 whitespace-nowrap">
                                 <div class="flex items-center space-x-2">
                                     <!-- Block/Unblock -->
-                                    <form action="{{ route('superadmin.users.toggle-block', $user) }}" method="POST" class="inline">
+                                    <form id="toggle-block-{{ $user->id }}" action="{{ route('superadmin.users.toggle-block', $user) }}" method="POST" class="inline">
                                         @csrf
-                                        @method('PATCH')
-                                        <button type="submit" 
+                                        <button type="button" 
                                                 class="px-3 py-1.5 text-xs font-medium rounded-lg transition-colors {{ $user->is_blocked ? 'bg-green-100 text-green-700 hover:bg-green-200' : 'bg-yellow-100 text-yellow-700 hover:bg-yellow-200' }}"
-                                                onclick="return confirm('{{ $user->is_blocked ? 'Buka blokir pengguna ini?' : 'Blokir pengguna ini?' }}')">
+                                                onclick="confirmToggleBlock('{{ $user->id }}', '{{ $user->name }}', {{ $user->is_blocked ? 'true' : 'false' }})">
                                             {{ $user->is_blocked ? 'Buka Blokir' : 'Blokir' }}
                                         </button>
                                     </form>
 
                                     <!-- Delete -->
-                                    <form action="{{ route('superadmin.users.destroy', $user) }}" method="POST" class="inline">
+                                    <form id="delete-user-{{ $user->id }}" action="{{ route('superadmin.users.destroy', $user) }}" method="POST" class="inline">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" 
+                                        <button type="button" 
                                                 class="px-3 py-1.5 text-xs font-medium rounded-lg bg-red-100 text-red-700 hover:bg-red-200 transition-colors"
-                                                onclick="return confirm('Hapus pengguna ini? Tindakan ini tidak dapat dibatalkan.')">
+                                                onclick="confirmDeleteUser('{{ $user->id }}', '{{ $user->name }}')">
                                             Hapus
                                         </button>
                                     </form>
@@ -142,4 +150,46 @@
         @endif
     </div>
 </div>
+
+@push('scripts')
+<script>
+function confirmToggleBlock(userId, userName, isBlocked) {
+    const action = isBlocked ? 'buka blokir' : 'blokir';
+    const icon = isBlocked ? 'info' : 'warning';
+    
+    Swal.fire({
+        title: isBlocked ? 'Buka Blokir Pengguna?' : 'Blokir Pengguna?',
+        text: `Anda yakin ingin ${action} pengguna "${userName}"?`,
+        icon: icon,
+        showCancelButton: true,
+        confirmButtonColor: isBlocked ? '#10B981' : '#F59E0B',
+        cancelButtonColor: '#6B7280',
+        confirmButtonText: isBlocked ? 'Ya, Buka Blokir' : 'Ya, Blokir',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('toggle-block-' + userId).submit();
+        }
+    });
+}
+
+function confirmDeleteUser(userId, userName) {
+    Swal.fire({
+        title: 'Hapus Pengguna?',
+        text: `Anda yakin ingin menghapus pengguna "${userName}"? Tindakan ini tidak dapat dibatalkan.`,
+        icon: 'error',
+        showCancelButton: true,
+        confirmButtonColor: '#EF4444',
+        cancelButtonColor: '#6B7280',
+        confirmButtonText: 'Ya, Hapus',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('delete-user-' + userId).submit();
+        }
+    });
+}
+</script>
+@endpush
 @endsection
+

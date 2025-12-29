@@ -26,7 +26,7 @@ class RoomManagementController extends Controller
                     ->where('end_date', '>=', now());
             }])
             ->orderBy('floor')
-            ->orderBy('room_number')
+            ->orderByRaw('CAST(room_number AS UNSIGNED)')
             ->get();
 
         // Add computed is_available property and has_active_booking for each room
@@ -84,6 +84,9 @@ class RoomManagementController extends Controller
             'status' => $validated['status'] ?? 'available',
         ]);
 
+        // Sync available_rooms count in boarding house
+        $this->syncAvailableRoomsCount($boardingHouse);
+
         return back()->with('success', 'Kamar berhasil ditambahkan!');
     }
 
@@ -126,6 +129,9 @@ class RoomManagementController extends Controller
             }
         }
 
+        // Sync available_rooms count in boarding house
+        $this->syncAvailableRoomsCount($boardingHouse);
+
         return back()->with('success', "{$created} kamar berhasil ditambahkan!");
     }
 
@@ -145,7 +151,26 @@ class RoomManagementController extends Controller
 
         $room->update(['status' => $validated['status']]);
 
+        // Sync available_rooms count in boarding house
+        $this->syncAvailableRoomsCount($boardingHouse);
+
         return back()->with('success', 'Status kamar berhasil diperbarui!');
+    }
+
+    /**
+     * Sync the available_rooms count in boarding house based on actual room status.
+     */
+    private function syncAvailableRoomsCount(BoardingHouse $boardingHouse): void
+    {
+        $availableCount = $boardingHouse->rooms()
+            ->where('status', 'available')
+            ->whereDoesntHave('bookings', function ($query) {
+                $query->whereIn('status', ['pending', 'approved'])
+                    ->where('end_date', '>=', now());
+            })
+            ->count();
+
+        $boardingHouse->update(['available_rooms' => $availableCount]);
     }
 
     /**
@@ -168,6 +193,9 @@ class RoomManagementController extends Controller
         }
 
         $room->delete();
+
+        // Sync available_rooms count in boarding house
+        $this->syncAvailableRoomsCount($boardingHouse);
 
         return back()->with('success', 'Kamar berhasil dihapus!');
     }

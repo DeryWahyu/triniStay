@@ -88,6 +88,15 @@ class SuperAdminController extends Controller
             $query->where('role', $request->role);
         }
 
+        // Filter by status (active/blocked)
+        if ($request->filled('status')) {
+            if ($request->status === 'blocked') {
+                $query->where('is_blocked', true);
+            } elseif ($request->status === 'active') {
+                $query->where('is_blocked', false);
+            }
+        }
+
         // Search
         if ($request->filled('search')) {
             $search = $request->search;

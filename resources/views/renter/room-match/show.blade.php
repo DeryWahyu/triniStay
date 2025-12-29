@@ -37,8 +37,8 @@
             <div class="flex justify-between items-center h-16">
                 <a href="{{ route('renter.dashboard') }}" class="flex items-center space-x-2">
                     <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M9 22V12H15V22" stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 22V12H15V22" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     <span class="text-xl font-bold text-navy">TriniStay</span>
                 </a>
@@ -46,20 +46,21 @@
                 <div class="hidden md:flex items-center space-x-8">
                     <a href="{{ route('renter.dashboard') }}" class="text-gray-600 hover:text-navy transition-colors">Beranda</a>
                     <a href="{{ route('renter.kos.search') }}" class="text-gray-600 hover:text-navy transition-colors">Cari Kos</a>
-                    <a href="{{ route('renter.room-match.index') }}" class="text-navy font-medium">Cari Teman</a>
+                    <a href="{{ route('renter.room-match.index') }}" class="text-blue-600 font-semibold">Cari Teman</a>
                     <a href="{{ route('renter.orders.index') }}" class="text-gray-600 hover:text-navy transition-colors">Pemesanan</a>
                 </div>
 
                 <div class="flex items-center space-x-4">
                     <div class="relative" x-data="{ open: false }">
                         <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
-                            <div class="w-10 h-10 bg-gradient-to-br from-[#19608E] to-[#162D40] rounded-full flex items-center justify-center shadow-md">
+                            <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-blue-600 rounded-full flex items-center justify-center shadow-md ring-2 ring-blue-200">
                                 <span class="text-white font-semibold text-sm">{{ Auth::user()->initials }}</span>
                             </div>
                             <span class="hidden sm:block text-navy font-medium">{{ Auth::user()->name }}</span>
                         </button>
                         <div x-show="open" @click.away="open = false" x-cloak class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg py-2 z-50 border border-gray-100">
                             <a href="{{ route('renter.profile.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-50">Profil Saya</a>
+                            <a href="{{ route('renter.orders.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-50">Pemesanan</a>
                             <hr class="my-2">
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
@@ -167,13 +168,13 @@
                                 <p class="text-white font-semibold text-lg">Kecocokan</p>
                                 <p class="text-blue-100 text-sm">
                                     @if($matchPercentage >= 80)
-                                        Sangat Cocok! 🎉
+                                        Sangat Cocok! 
                                     @elseif($matchPercentage >= 60)
-                                        Cukup Cocok 👍
+                                        Cukup Cocok 
                                     @elseif($matchPercentage >= 40)
-                                        Lumayan 🤔
+                                        Lumayan 
                                     @else
-                                        Kurang Cocok 😅
+                                        Kurang Cocok 
                                     @endif
                                 </p>
                             </div>
@@ -199,23 +200,23 @@
             <div class="px-6 py-5">
                 <div class="flex flex-wrap gap-2 mb-4">
                     @if(!$preference->smoking)
-                        <span class="inline-flex items-center px-3 py-1.5 bg-green-100 text-green-700 rounded-full text-sm font-medium">🚭 Non-Perokok</span>
+                        <span class="inline-flex items-center px-3 py-1.5 bg-green-100 text-green-700 rounded-full text-sm font-medium">Non-Perokok</span>
                     @else
-                        <span class="inline-flex items-center px-3 py-1.5 bg-amber-100 text-amber-700 rounded-full text-sm font-medium">🚬 Perokok</span>
+                        <span class="inline-flex items-center px-3 py-1.5 bg-amber-100 text-amber-700 rounded-full text-sm font-medium">Perokok</span>
                     @endif
                     @if($preference->introvert)
-                        <span class="inline-flex items-center px-3 py-1.5 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">🧘 Introvert</span>
+                        <span class="inline-flex items-center px-3 py-1.5 bg-purple-100 text-purple-700 rounded-full text-sm font-medium">Introvert</span>
                     @else
-                        <span class="inline-flex items-center px-3 py-1.5 bg-orange-100 text-orange-700 rounded-full text-sm font-medium">🎉 Ekstrovert</span>
+                        <span class="inline-flex items-center px-3 py-1.5 bg-orange-100 text-orange-700 rounded-full text-sm font-medium">Ekstrovert</span>
                     @endif
                     @if($preference->sleep_lamp_off)
-                        <span class="inline-flex items-center px-3 py-1.5 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium">🌙 Lampu Mati</span>
+                        <span class="inline-flex items-center px-3 py-1.5 bg-indigo-100 text-indigo-700 rounded-full text-sm font-medium">Lampu Mati</span>
                     @endif
                     @if($preference->clean_daily)
-                        <span class="inline-flex items-center px-3 py-1.5 bg-teal-100 text-teal-700 rounded-full text-sm font-medium">✨ Rapi Harian</span>
+                        <span class="inline-flex items-center px-3 py-1.5 bg-teal-100 text-teal-700 rounded-full text-sm font-medium">Rapi Harian</span>
                     @endif
                     @if($preference->pet_friendly)
-                        <span class="inline-flex items-center px-3 py-1.5 bg-pink-100 text-pink-700 rounded-full text-sm font-medium">🐾 Suka Hewan</span>
+                        <span class="inline-flex items-center px-3 py-1.5 bg-pink-100 text-pink-700 rounded-full text-sm font-medium">Suka Hewan</span>
                     @endif
                 </div>
             </div>
@@ -244,7 +245,7 @@
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
                         </svg>
-                        🌙 Kebiasaan Tidur
+                        Kebiasaan Tidur
                     </h2>
                 </div>
                 <div class="divide-y">
@@ -283,7 +284,7 @@
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"/>
                         </svg>
-                        ✨ Kebersihan
+                        Kebersihan
                     </h2>
                 </div>
                 <div class="divide-y">
@@ -320,7 +321,7 @@
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
                         </svg>
-                        📚 Belajar/Kerja
+                        Belajar/Kerja
                     </h2>
                 </div>
                 <div class="divide-y">
@@ -357,7 +358,7 @@
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
                         </svg>
-                        🎉 Sosial
+                        Sosial
                     </h2>
                 </div>
                 <div class="divide-y">

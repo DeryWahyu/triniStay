@@ -26,20 +26,22 @@ class OrderController extends Controller
             ->get();
 
         // Get bookings where user is invited (shared partner)
-        // These are bookings where:
-        // 1. User is listed as shared_with_user_id on the ORIGINAL booking (parent), OR
-        // 2. User has a linked booking created for them (has parent_booking_id)
+        // For invited users:
+        // - If status is 'pending': show the ORIGINAL booking (so they can accept/reject)
+        // - If status is 'accepted': show their LINKED booking only (avoid duplicate)
         $sharedBookings = Booking::where(function($query) use ($userId) {
-                // User is invited on the original booking
+                // User is invited on the original booking AND status is still pending
                 $query->where('shared_with_user_id', $userId)
-                      ->whereNull('parent_booking_id');
+                      ->whereNull('parent_booking_id')
+                      ->where('shared_status', 'pending');
             })
             ->orWhere(function($query) use ($userId) {
-                // User has a linked booking (their own booking created when invited)
+                // User has a linked booking (their own booking created when they accepted)
+                // This is shown after they accept the invitation
                 $query->where('user_id', $userId)
                       ->whereNotNull('parent_booking_id');
             })
-            ->with(['boardingHouse', 'room', 'user', 'sharedWithUser'])
+            ->with(['boardingHouse', 'room', 'user', 'sharedWithUser', 'parentBooking.user'])
             ->latest()
             ->get();
 

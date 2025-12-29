@@ -47,8 +47,8 @@
                 <!-- Logo -->
                 <div class="flex items-center gap-2 mb-8">
                     <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        <path d="M9 22V12H15V22" stroke="#1F2937" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M3 9L12 2L21 9V20C21 20.5304 20.7893 21.0391 20.4142 21.4142C20.0391 21.7893 19.5304 22 19 22H5C4.46957 22 3.96086 21.7893 3.58579 21.4142C3.21071 21.0391 3 20.5304 3 20V9Z" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M9 22V12H15V22" stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     </svg>
                     <span class="text-2xl font-semibold text-navy">TriniStay</span>
                 </div>
@@ -62,8 +62,8 @@
                     <!-- Owner Card -->
                     <a href="{{ route('register.owner') }}" class="block p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-navy hover:shadow-lg transition-all duration-300 group">
                         <div class="flex items-start gap-4">
-                            <div class="p-3 bg-navy/10 rounded-lg group-hover:bg-navy/20 transition-colors">
-                                <svg class="w-8 h-8 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="p-3 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors">
+                                <svg class="w-8 h-8 text-[#3B82F6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
                                 </svg>
                             </div>
@@ -80,8 +80,8 @@
                     <!-- Renter Card -->
                     <a href="{{ route('register.renter') }}" class="block p-6 bg-white border-2 border-gray-200 rounded-xl hover:border-navy hover:shadow-lg transition-all duration-300 group">
                         <div class="flex items-start gap-4">
-                            <div class="p-3 bg-navy/10 rounded-lg group-hover:bg-navy/20 transition-colors">
-                                <svg class="w-8 h-8 text-navy" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <div class="p-3 bg-blue-100 rounded-lg group-hover:bg-blue-200 transition-colors">
+                                <svg class="w-8 h-8 text-[#3B82F6]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
                                 </svg>
                             </div>

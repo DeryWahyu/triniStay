@@ -22,7 +22,8 @@ class BookingController extends Controller
         $boardingHouse = BoardingHouse::where('slug', $slug)
             ->where('status', 'active')
             ->with(['rooms' => function($query) {
-                $query->orderBy('room_number');
+                $query->orderBy('floor')
+                    ->orderByRaw('CAST(room_number AS UNSIGNED)');
             }, 'user'])
             ->firstOrFail();
 
@@ -344,5 +345,34 @@ class BookingController extends Controller
         $booking->update(['status' => 'cancelled']);
 
         return back()->with('success', 'Pemesanan berhasil dibatalkan.');
+    }
+
+    /**
+     * Delete a booking permanently.
+     */
+    public function destroy(Booking $booking)
+    {
+        // Check ownership
+        if ($booking->user_id !== Auth::id() && $booking->shared_with_user_id !== Auth::id()) {
+            abort(403);
+        }
+
+        // Only allow deletion for cancelled, rejected, or completed bookings
+        if (!in_array($booking->status, ['cancelled', 'rejected', 'completed'])) {
+            return back()->withErrors(['error' => 'Hanya pemesanan yang sudah dibatalkan, ditolak, atau selesai yang dapat dihapus.']);
+        }
+
+        // Delete payment proof file if exists
+        if ($booking->payment_proof) {
+            Storage::disk('public')->delete($booking->payment_proof);
+        }
+
+        // Delete linked bookings if this is the parent
+        Booking::where('parent_booking_id', $booking->id)->delete();
+
+        // Delete the booking
+        $booking->delete();
+
+        return redirect()->route('renter.orders.index')->with('success', 'Pemesanan berhasil dihapus dari riwayat.');
     }
 }

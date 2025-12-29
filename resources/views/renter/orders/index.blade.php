@@ -82,34 +82,70 @@
     </nav>
 
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" x-data="{ activeTab: 'my-orders' }">
-        <!-- Page Header with Stats -->
-        <div class="bg-gradient-to-r from-blue-600 to-indigo-700 rounded-3xl p-6 md:p-8 mb-8 text-white relative overflow-hidden">
+        <!-- Page Header with Dynamic Stats -->
+        @php
+            // My Bookings Stats
+            $myPendingCount = $myBookings->where('status', 'pending')->count();
+            $myApprovedCount = $myBookings->where('status', 'approved')->count();
+            $myCompletedCount = $myBookings->where('status', 'completed')->count();
+            $myRejectedCount = $myBookings->where('status', 'rejected')->count();
+            
+            // Room Match Stats
+            $rmPendingCount = $sharedBookings->where('status', 'pending')->count();
+            $rmApprovedCount = $sharedBookings->where('status', 'approved')->count();
+            $rmCompletedCount = $sharedBookings->where('status', 'completed')->count();
+            $rmRejectedCount = $sharedBookings->where('status', 'rejected')->count();
+        @endphp
+        
+        <div class="rounded-3xl p-6 md:p-8 mb-8 text-white relative overflow-hidden transition-all duration-300"
+             :class="activeTab === 'my-orders' ? 'bg-gradient-to-r from-blue-600 to-indigo-700' : 'bg-gradient-to-r from-green-500 to-emerald-600'">
             <div class="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width=%2260%22 height=%2260%22 viewBox=%220 0 60 60%22 xmlns=%22http://www.w3.org/2000/svg%22%3E%3Cg fill=%22none%22 fill-rule=%22evenodd%22%3E%3Cg fill=%22%23ffffff%22 fill-opacity=%220.08%22%3E%3Cpath d=%22M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2V36h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z%22/%3E%3C/g%3E%3C/g%3E%3C/svg%3E')] opacity-50"></div>
             <div class="relative z-10">
                 <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+                    <!-- Dynamic Title -->
                     <div>
-                        <h1 class="text-2xl md:text-3xl font-bold mb-2">Pemesanan Saya</h1>
-                        <p class="text-blue-100">Kelola dan pantau status pemesanan kos Anda dengan mudah</p>
+                        <h1 class="text-2xl md:text-3xl font-bold mb-2" x-text="activeTab === 'my-orders' ? 'Pemesanan Saya' : 'Room Match'"></h1>
+                        <p :class="activeTab === 'my-orders' ? 'text-blue-100' : 'text-green-100'" 
+                           x-text="activeTab === 'my-orders' ? 'Kelola dan pantau status pemesanan kos Anda dengan mudah' : 'Statistik pemesanan bersama teman sekamar Anda'"></p>
                     </div>
                     
-                    <!-- Quick Stats -->
-                    <div class="flex gap-4">
-                        @php
-                            $pendingCount = $myBookings->where('status', 'pending')->count();
-                            $approvedCount = $myBookings->where('status', 'approved')->count();
-                            $completedCount = $myBookings->where('status', 'completed')->count();
-                        @endphp
+                    <!-- Dynamic Stats - My Orders -->
+                    <div class="flex flex-wrap gap-3" x-show="activeTab === 'my-orders'" x-transition>
                         <div class="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-3 text-center">
-                            <p class="text-2xl font-bold">{{ $pendingCount }}</p>
+                            <p class="text-2xl font-bold">{{ $myPendingCount }}</p>
                             <p class="text-xs text-blue-100">Menunggu</p>
                         </div>
                         <div class="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-3 text-center">
-                            <p class="text-2xl font-bold">{{ $approvedCount }}</p>
+                            <p class="text-2xl font-bold">{{ $myApprovedCount }}</p>
                             <p class="text-xs text-blue-100">Disetujui</p>
                         </div>
                         <div class="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-3 text-center">
-                            <p class="text-2xl font-bold">{{ $completedCount }}</p>
+                            <p class="text-2xl font-bold">{{ $myCompletedCount }}</p>
                             <p class="text-xs text-blue-100">Selesai</p>
+                        </div>
+                        <div class="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-3 text-center">
+                            <p class="text-2xl font-bold">{{ $myRejectedCount }}</p>
+                            <p class="text-xs text-blue-100">Ditolak</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Dynamic Stats - Room Match -->
+                    <div class="flex flex-wrap gap-3" x-show="activeTab === 'shared'" x-transition x-cloak>
+                        <div class="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-3 text-center">
+                            <p class="text-2xl font-bold">{{ $rmPendingCount }}</p>
+                            <p class="text-xs text-green-100">Menunggu</p>
+                        </div>
+                        <div class="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-3 text-center">
+                            <p class="text-2xl font-bold">{{ $rmApprovedCount }}</p>
+                            <p class="text-xs text-green-100">Disetujui</p>
+                        </div>
+                        <div class="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-3 text-center">
+                            <p class="text-2xl font-bold">{{ $rmCompletedCount }}</p>
+                            <p class="text-xs text-green-100">Selesai</p>
+                        </div>
+                        <div class="bg-white/20 backdrop-blur-sm rounded-xl px-4 py-3 text-center">
+                            <p class="text-2xl font-bold">{{ $rmRejectedCount }}</p>
+                            <p class="text-xs text-green-100">Ditolak</p>
                         </div>
                     </div>
                 </div>
@@ -307,13 +343,28 @@
                                                     </button>
                                                 </form>
                                             @endif
+
+                                            @if(in_array($booking->status, ['cancelled', 'rejected', 'completed']))
+                                                <form action="{{ route('renter.booking.destroy', $booking) }}" method="POST"
+                                                      onsubmit="return confirm('Yakin ingin menghapus pesanan ini dari riwayat? Tindakan ini tidak dapat dibatalkan.')">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit"
+                                                            class="w-full px-5 py-2.5 text-sm font-medium text-gray-600 bg-gray-100 rounded-xl hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
+                                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                        </svg>
+                                                        Hapus
+                                                    </button>
+                                                </form>
+                                            @endif
                                         </div>
                                     </div>
 
                                     <!-- Footer -->
                                     <div class="mt-4 pt-4 border-t border-gray-100 flex items-center justify-between text-xs text-gray-400">
                                         <span>Dipesan {{ $booking->created_at->diffForHumans() }}</span>
-                                        <span>{{ $booking->created_at->format('d M Y, H:i') }}</span>
+                                        <span>{{ $booking->created_at->format('d M Y') }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -515,6 +566,21 @@
                                                         </svg>
                                                         Unduh
                                                     </a>
+                                                @endif
+
+                                                @if(in_array($booking->status, ['cancelled', 'rejected', 'completed']))
+                                                    <form action="{{ route('renter.booking.destroy', $booking) }}" method="POST"
+                                                          onsubmit="return confirm('Yakin ingin menghapus pesanan ini dari riwayat? Tindakan ini tidak dapat dibatalkan.')">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"
+                                                                class="w-full px-5 py-2.5 text-sm font-medium text-gray-600 bg-gray-100 rounded-xl hover:bg-gray-200 transition-colors flex items-center justify-center gap-2">
+                                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                            </svg>
+                                                            Hapus
+                                                        </button>
+                                                    </form>
                                                 @endif
                                             @endif
                                         </div>

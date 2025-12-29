@@ -287,10 +287,10 @@
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
                 <h3 class="font-semibold text-gray-900 mb-4">Tindakan</h3>
                 <div class="space-y-3">
-                    <form action="{{ route('owner.bookings.approve', $booking) }}" method="POST">
+                    <form id="approve-booking-{{ $booking->id }}" action="{{ route('owner.bookings.approve', $booking) }}" method="POST">
                         @csrf
-                        <button type="submit"
-                                onclick="return confirm('Yakin ingin menyetujui pemesanan ini?')"
+                        <button type="button"
+                                onclick="confirmApprove('{{ $booking->id }}')"
                                 class="w-full py-3 bg-green-500 text-white font-medium rounded-xl hover:bg-green-600 transition-colors flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
@@ -298,10 +298,10 @@
                             Setujui Pemesanan
                         </button>
                     </form>
-                    <form action="{{ route('owner.bookings.reject', $booking) }}" method="POST">
+                    <form id="reject-booking-{{ $booking->id }}" action="{{ route('owner.bookings.reject', $booking) }}" method="POST">
                         @csrf
-                        <button type="submit"
-                                onclick="return confirm('Yakin ingin menolak pemesanan ini?')"
+                        <button type="button"
+                                onclick="confirmReject('{{ $booking->id }}')"
                                 class="w-full py-3 bg-red-50 text-red-600 font-medium rounded-xl hover:bg-red-100 transition-colors flex items-center justify-center">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -314,10 +314,10 @@
             @elseif($booking->status === 'approved')
             <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
                 <h3 class="font-semibold text-gray-900 mb-4">Tindakan</h3>
-                <form action="{{ route('owner.bookings.complete', $booking) }}" method="POST">
+                <form id="complete-booking-{{ $booking->id }}" action="{{ route('owner.bookings.complete', $booking) }}" method="POST">
                     @csrf
-                    <button type="submit"
-                            onclick="return confirm('Tandai pemesanan ini sebagai selesai?')"
+                    <button type="button"
+                            onclick="confirmComplete('{{ $booking->id }}')"
                             class="w-full py-3 bg-blue-500 text-white font-medium rounded-xl hover:bg-blue-600 transition-colors flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -354,3 +354,58 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+function confirmApprove(bookingId) {
+    Swal.fire({
+        title: 'Setujui Pemesanan?',
+        text: 'Anda yakin ingin menyetujui pemesanan ini?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#10B981',
+        cancelButtonColor: '#6B7280',
+        confirmButtonText: 'Ya, Setujui',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('approve-booking-' + bookingId).submit();
+        }
+    });
+}
+
+function confirmReject(bookingId) {
+    Swal.fire({
+        title: 'Tolak Pemesanan?',
+        text: 'Anda yakin ingin menolak pemesanan ini?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#EF4444',
+        cancelButtonColor: '#6B7280',
+        confirmButtonText: 'Ya, Tolak',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('reject-booking-' + bookingId).submit();
+        }
+    });
+}
+
+function confirmComplete(bookingId) {
+    Swal.fire({
+        title: 'Selesaikan Pemesanan?',
+        text: 'Tandai pemesanan ini sebagai selesai?',
+        icon: 'info',
+        showCancelButton: true,
+        confirmButtonColor: '#3B82F6',
+        cancelButtonColor: '#6B7280',
+        confirmButtonText: 'Ya, Selesai',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('complete-booking-' + bookingId).submit();
+        }
+    });
+}
+</script>
+@endpush

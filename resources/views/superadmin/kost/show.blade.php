@@ -66,11 +66,11 @@
                     </div>
 
                     <!-- Delete Button -->
-                    <form action="{{ route('superadmin.kost.destroy', $boardingHouse) }}" method="POST" 
-                          onsubmit="return confirm('Apakah Anda yakin ingin menghapus kos ini? Semua data terkait akan ikut terhapus.');">
+                    <form id="delete-kost-{{ $boardingHouse->id }}" action="{{ route('superadmin.kost.destroy', $boardingHouse) }}" method="POST">
                         @csrf
                         @method('DELETE')
-                        <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors flex items-center">
+                        <button type="button" class="px-4 py-2 bg-red-600 text-white rounded-xl hover:bg-red-700 transition-colors flex items-center"
+                                onclick="confirmDeleteKost('{{ $boardingHouse->id }}', '{{ $boardingHouse->name }}')">
                             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                             </svg>
@@ -238,4 +238,25 @@
         @endif
     </div>
 </div>
+
+@push('scripts')
+<script>
+function confirmDeleteKost(kostId, kostName) {
+    Swal.fire({
+        title: 'Hapus Kos?',
+        text: `Anda yakin ingin menghapus kos "${kostName}"? Semua data terkait akan ikut terhapus.`,
+        icon: 'error',
+        showCancelButton: true,
+        confirmButtonColor: '#EF4444',
+        cancelButtonColor: '#6B7280',
+        confirmButtonText: 'Ya, Hapus',
+        cancelButtonText: 'Batal'
+    }).then((result) => {
+        if (result.isConfirmed) {
+            document.getElementById('delete-kost-' + kostId).submit();
+        }
+    });
+}
+</script>
+@endpush
 @endsection
