@@ -119,7 +119,7 @@
                 </div>
 
                 <!-- Form Booking -->
-                <form action="{{ route('renter.booking.store') }}" method="POST" enctype="multipart/form-data" @submit="handleSubmit($event)" class="space-y-6">
+                <form id="bookingForm" action="{{ route('renter.booking.store') }}" method="POST" enctype="multipart/form-data" @submit="handleSubmit($event)" class="space-y-6">
                     @csrf
                     <input type="hidden" name="boarding_house_id" value="{{ $boardingHouse->id }}">
                     <input type="hidden" name="duration" value="{{ $duration }}">
@@ -512,8 +512,8 @@
                     @endif
 
                     <!-- Submit Button (Desktop) -->
-                    <button type="submit" form="bookingForm" :disabled="!canSubmit || submitting"
-                            @click="document.querySelector('form').dispatchEvent(new Event('submit', {cancelable: true, bubbles: true}))"
+                    <button type="button" :disabled="!canSubmit || submitting"
+                            @click="if(canSubmit && !submitting) { document.getElementById('bookingForm').requestSubmit(); }"
                             class="hidden lg:block w-full mt-6 py-4 bg-gradient-to-r from-blue-500 to-blue-600 text-white font-semibold rounded-xl shadow-lg hover:from-blue-600 hover:to-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300 disabled:opacity-50 disabled:cursor-not-allowed transition-all">
                         <span x-show="!submitting">Ajukan Sewa Sekarang</span>
                         <span x-show="submitting" class="flex items-center justify-center">
